@@ -6,3 +6,4 @@
     </main>
 </div>
 <?php include 'partials/footer.view.php'; ?>
+
