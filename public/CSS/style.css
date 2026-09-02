@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@import url("customer-navbar.css");
+@import url("footer.css");
+
+/* Global styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Inter", sans-serif;
+  background-color: #faf6f1;
+  color: #241f1b;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Colors */
+
+:root {
+  --color-primary: #ff5a1f;
+  --color-primary-light: #ff8f5c;
+  --color-primary-dark: #e14a0f;
+
+  --color-secondary: #241f1b;
+
+  --color-background: #faf6f1;
+  --color-surface: #ffffff;
+  --color-muted: #f1ebe1;
+  --color-border: #ece3d8;
+  --color-muted-fg: #857a6e;
+
+  --color-success: #1e9e5a;
+  --color-success-bg: #e7f6ee;
+
+  --color-error: #dc2626;
+  --color-error-bg: #fee2e2;
+
+  --color-warning: #a6690a;
+  --color-warning-bg: #fff3de;
+
+  --color-info: #2158b3;
+  --color-info-bg: #e4eefc;
+
+  --color-rating: #e9a319;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1cec8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8b5af;
+}
+
+/* Line clamp */
+
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Photo effect */
+
+.photo-shade {
+  position: relative;
+}
+
+.photo-shade::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 22% 15%,
+      rgba(255, 255, 255, 0.16),
+      transparent 45%
+    ),
+    radial-gradient(circle at 85% 95%, rgba(0, 0, 0, 0.14), transparent 55%);
+
+  pointer-events: none;
+}
+
+/* Grain effect */
+
+.grain-surface {
+  position: relative;
+}
+
+.grain-surface::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.05;
+
+  pointer-events: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
