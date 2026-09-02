@@ -23,3 +23,17 @@ document.addEventListener("click", function (event) {
     profileDropdown.classList.remove("show");
   }
 });
+
+function navigate(page) {
+  const routes = {
+    "c-home": "/customer/home",
+    "c-orders": "/customer/orders",
+    "c-notifications": "/customer/notifications",
+    "c-profile": "/customer/profile",
+    "c-cart": "/customer/cart",
+  };
+
+  if (routes[page]) {
+    window.location.href = routes[page];
+  }
+}
