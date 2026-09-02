@@ -32,7 +32,7 @@
             <!-- Cart -->
             <button
                 class="icon-button"
-                onclick="navigate('c-checkout')"
+                onclick="navigate('c-cart')"
                 aria-label="Cart">
                 <?php include '../public/assets/icons/shopping-cart.php' ?>
 
