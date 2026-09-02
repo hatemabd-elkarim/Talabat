@@ -1,0 +1,15 @@
+{
+  "name": "hatem/talabat",
+  "description": "Food delivery system",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Core\\": "core/",
+      "Models\\": "models/",
+      "Http\\": "Http/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {}
+}
