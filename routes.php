@@ -6,6 +6,7 @@ use Http\Controllers\DashboardController;
 use Http\Controllers\ProfileController;
 use Http\Controllers\NotificationController;
 use Http\Controllers\OrderController;
+use Http\Controllers\RestaurantController;
 
 // testing route
 $router->get('/', [IndexController::class, 'index']);
@@ -20,3 +21,4 @@ $router->get('/customer/profile', [ProfileController::class, 'showCustomerProfil
 $router->get('/customer/notifications', [NotificationController::class, 'showCustomerNotifications']);
 $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders']);
 $router->get('/customer/cart', [OrderController::class, 'cart']);
+$router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
