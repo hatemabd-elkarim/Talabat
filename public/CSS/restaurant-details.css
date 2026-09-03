@@ -1,0 +1,900 @@
+/* ========================================
+   RESTAURANT DETAILS PAGE
+======================================== */
+
+.restaurant-page {
+  min-height: 100vh;
+  background-color: #faf6f1;
+  color: #241f1b;
+}
+
+/* ========================================
+   HERO
+======================================== */
+
+.restaurant-hero {
+  position: relative;
+  height: 320px;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+
+  z-index: 2;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background-color: white;
+
+  color: #241f1b;
+  text-decoration: none;
+
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+}
+
+.restaurant-hero-content {
+  position: absolute;
+  left: 40px;
+  bottom: 30px;
+
+  z-index: 2;
+  color: white;
+}
+
+.restaurant-hero-content h1 {
+  margin-top: 10px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 36px;
+}
+
+/* ========================================
+   RESTAURANT BADGES
+======================================== */
+
+.restaurant-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status,
+.cuisine {
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.open {
+  background-color: white;
+  color: #1e9e5a;
+}
+
+.status.closed {
+  background-color: white;
+  color: #dc2626;
+}
+
+.cuisine {
+  border: 1px solid white;
+  color: white;
+}
+
+/* ========================================
+   RESTAURANT STATS
+======================================== */
+
+.restaurant-stats {
+  background-color: white;
+  border-bottom: 1px solid #ece3d8;
+}
+
+.stats-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  flex-wrap: wrap;
+
+  color: #857a6e;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+}
+
+.stat strong {
+  color: #241f1b;
+}
+
+.stat svg {
+  width: 14px;
+  height: 14px;
+
+  color: #ff5a1f;
+}
+
+.star {
+  color: #e9a319;
+}
+
+/* ========================================
+   TABS
+======================================== */
+
+.restaurant-tabs {
+  position: sticky;
+  top: 64px;
+
+  z-index: 20;
+
+  background-color: white;
+  border-bottom: 1px solid #ece3d8;
+}
+
+.tabs-container {
+  max-width: 1000px;
+  margin: auto;
+
+  display: flex;
+}
+
+.tab {
+  padding: 15px 25px;
+
+  border: none;
+  border-bottom: 2px solid transparent;
+
+  background: transparent;
+
+  color: #857a6e;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.tab:hover {
+  color: #ff5a1f;
+}
+
+.tab.active {
+  border-color: #ff5a1f;
+
+  color: #ff5a1f;
+  font-weight: 600;
+}
+
+/* ========================================
+   MAIN CONTENT
+======================================== */
+
+.restaurant-content {
+  max-width: 1000px;
+  min-height: 500px;
+
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ========================================
+   MENU LAYOUT
+======================================== */
+
+.menu-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+/* ========================================
+   CATEGORIES
+======================================== */
+
+.categories {
+  width: 180px;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.category {
+  padding: 12px 15px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #857a6e;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.category:hover {
+  background-color: #f1ebe1;
+}
+
+.category.active {
+  background-color: rgba(255, 90, 31, 0.1);
+
+  color: #ff5a1f;
+  font-weight: 600;
+}
+
+/* ========================================
+   PRODUCTS
+======================================== */
+
+.products {
+  flex: 1;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 15px;
+}
+
+.product-card {
+  display: flex;
+  gap: 15px;
+
+  padding: 15px;
+
+  background-color: white;
+
+  border: 1px solid #ece3d8;
+  border-radius: 16px;
+
+  transition: 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 18px rgba(36, 31, 27, 0.08);
+}
+
+.product-image {
+  width: 90px;
+  height: 90px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 14px;
+}
+
+.product-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-content h3 {
+  margin-bottom: 5px;
+
+  font-size: 16px;
+}
+
+.product-content p {
+  margin-top: 5px;
+
+  color: #857a6e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ========================================
+   UNAVAILABLE PRODUCTS
+======================================== */
+
+.product-card {
+  position: relative;
+}
+
+.unavailable-card {
+  position: relative;
+}
+
+.unavailable-card::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-color: rgba(250, 246, 241, 0.75);
+
+  border-radius: 16px;
+
+  z-index: 1;
+}
+
+.unavailable-card .product-image,
+.unavailable-card .product-content {
+  opacity: 0.45;
+  filter: grayscale(40%);
+}
+
+.unavailable-card:hover {
+  box-shadow: none;
+}
+
+.unavailable-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 2;
+
+  padding: 6px 16px;
+
+  background-color: #241f1b;
+  color: white;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+
+  white-space: nowrap;
+}
+
+/* ========================================
+   PRODUCT PRICE & BUTTON
+======================================== */
+
+.product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 12px;
+}
+
+.product-price {
+  color: #241f1b;
+  font-weight: 700;
+}
+
+.add-product {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: #ff5a1f;
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.add-product:hover {
+  background-color: #e14a0f;
+  transform: scale(1.05);
+}
+
+.unavailable {
+  color: #dc2626;
+  font-size: 13px;
+}
+
+/* ========================================
+   INFO
+======================================== */
+
+.info-card {
+  padding: 25px;
+
+  background-color: white;
+
+  border: 1px solid #ece3d8;
+  border-radius: 16px;
+}
+
+.info-about h2 {
+  margin-bottom: 12px;
+}
+
+.info-about p {
+  color: #857a6e;
+  line-height: 1.6;
+}
+
+.info-divider {
+  height: 1px;
+
+  margin: 20px 0;
+
+  background-color: #ece3d8;
+}
+
+.info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #241f1b;
+  font-size: 14px;
+}
+
+.info-row svg {
+  flex-shrink: 0;
+  color: #ff5a1f;
+}
+
+.open-text {
+  color: #1e9e5a;
+}
+
+.closed-text {
+  color: #dc2626;
+}
+
+.info-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  text-align: center;
+}
+
+.info-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-stat strong {
+  color: #ff5a1f;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.info-stat span {
+  color: #857a6e;
+  font-size: 13px;
+}
+
+/* ========================================
+   RESPONSIVE — INFO
+======================================== */
+
+@media (max-width: 768px) {
+  .info-stats {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .info-stat {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ece3d8;
+  }
+
+  .info-stat:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+/* ========================================
+   REVIEWS
+======================================== */
+
+.reviews-container {
+  max-width: 700px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.review-card {
+  padding: 25px;
+
+  background-color: white;
+
+  border: 1px solid #ece3d8;
+  border-radius: 16px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background-color: rgba(255, 90, 31, 0.1);
+  color: #ff5a1f;
+
+  font-weight: 700;
+}
+
+.review-rating {
+  margin-left: auto;
+
+  color: #e9a319;
+}
+
+.review-comment {
+  margin-top: 15px;
+
+  color: #857a6e;
+}
+
+/* ========================================
+   EMPTY STATE
+======================================== */
+
+.empty-state {
+  padding: 50px;
+
+  background-color: white;
+
+  border: 1px solid #ece3d8;
+  border-radius: 16px;
+
+  text-align: center;
+}
+
+.empty-state p {
+  margin-top: 10px;
+  color: #857a6e;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 768px) {
+  .restaurant-hero {
+    height: 250px;
+  }
+
+  .restaurant-hero-content {
+    left: 20px;
+  }
+
+  .restaurant-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .stats-container {
+    gap: 15px;
+  }
+
+  .restaurant-tabs {
+    top: 60px;
+  }
+
+  .menu-layout {
+    flex-direction: column;
+  }
+
+  .categories {
+    width: 100%;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .category {
+    white-space: nowrap;
+  }
+
+  .products {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-content {
+    padding: 20px 15px;
+  }
+}
+/* ========================================
+   REVIEWS HEADER
+======================================== */
+
+.reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 700px;
+  margin-bottom: 20px;
+
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviews-avg {
+  font-size: 32px;
+  color: #241f1b;
+}
+
+.reviews-stars {
+  color: #e9a319;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.reviews-count-text {
+  color: #857a6e;
+  font-size: 13px;
+}
+
+.write-review-btn {
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 12px;
+
+  background-color: #ff5a1f;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.write-review-btn:hover {
+  background-color: #e14a0f;
+  transform: scale(1.02);
+}
+
+/* ========================================
+   REVIEW MODAL
+======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(36, 31, 27, 0.55);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: 0.2s;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+
+  margin: 20px;
+
+  background-color: white;
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  transform: translateY(10px);
+  transition: 0.2s;
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 25px;
+
+  border-bottom: 1px solid #ece3d8;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  color: #241f1b;
+}
+
+.modal-close {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: #f1ebe1;
+  color: #857a6e;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.modal-close:hover {
+  background-color: #ece3d8;
+}
+
+.modal-body {
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-label {
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #241f1b;
+}
+
+.star-picker {
+  display: flex;
+  gap: 6px;
+
+  margin-bottom: 20px;
+
+  font-size: 28px;
+}
+
+.star-input {
+  color: #ece3d8;
+  cursor: pointer;
+
+  transition: 0.15s;
+}
+
+.star-input.selected {
+  color: #e9a319;
+}
+
+.modal-body textarea {
+  padding: 12px 14px;
+
+  border: 1px solid #ece3d8;
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 14px;
+  color: #241f1b;
+
+  resize: vertical;
+
+  margin-bottom: 20px;
+}
+
+.modal-body textarea:focus {
+  outline: none;
+  border-color: #ff5a1f;
+}
+
+.submit-review-btn {
+  padding: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  background-color: #ff5a1f;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.submit-review-btn:hover {
+  background-color: #e14a0f;
+}
+
+/* ========================================
+   RESPONSIVE — MODAL
+======================================== */
+
+@media (max-width: 768px) {
+  .reviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .write-review-btn {
+    width: 100%;
+  }
+}
