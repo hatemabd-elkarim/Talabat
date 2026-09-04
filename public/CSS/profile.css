@@ -1,0 +1,190 @@
+/* Profile */
+
+.profile-page {
+    background: #FBF3E7;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-container {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0;
+}
+
+.edit-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    cursor: pointer;
+}
+
+.profile-summary,
+.personal-information,
+.delivery-address,
+.account {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-summary img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 2px;
+}
+
+.profile-info p {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0 0 8px;
+}
+
+.role-badge {
+    display: inline-block;
+    background: #FCE3D6;
+    color: #EF5A28;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.personal-information h3,
+.delivery-address h3,
+.account h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.full-name,
+.email-address,
+.phone-number,
+.street-address {
+    margin-bottom: 14px;
+}
+
+.phone-number,
+.street-address {
+    margin-bottom: 0;
+}
+
+.full-name label,
+.email-address label,
+.phone-number label,
+.street-address label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.value-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #fff;
+}
+
+.value-box i {
+    color: #9CA3AF;
+    flex-shrink: 0;
+    width: 18px;
+}
+
+.value-box span {
+    font-size: 14px;
+    color: #1F2937;
+}
+
+.account h3 {
+    color: #E53935;
+}
+
+.sign-out-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #E53935;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.circle-right,
+.circle-left {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.circle-right {
+    width: 260px;
+    height: 260px;
+    background: #EDE7F6;
+    top: -100px;
+    right: -80px;
+}
+
+.circle-left {
+    width: 220px;
+    height: 220px;
+    background: #F7E4E1;
+    bottom: -90px;
+    left: -70px;
+}
+
+/* End Profile */
