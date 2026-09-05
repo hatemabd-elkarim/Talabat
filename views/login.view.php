@@ -29,13 +29,25 @@
             <form class="login-form" method="POST" action="/login">
                 <div class="email-field">
                     <label for="email">Email address</label>
-                    <input type="email" name="email" id="email" placeholder="you@example.com">
-                    <span class="email-error"></span>
+                    <input type="email" name="email" id="email" placeholder="you@example.com" required value="<?= old('email') ?? '' ?>">
+                    <span class="email-error">
+                        <?php if (!empty($errors['email'])): ?>
+                            <?= htmlspecialchars($errors['email']) ?>
+                        <?php endif; ?>
+
+                        <?php if (!empty($errors['Invalid_Credentials'])): ?>
+                            <?= htmlspecialchars($errors['Invalid_Credentials']) ?>
+                        <?php endif; ?>
+                    </span>
                 </div>
                 <div class="password-field">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="*******">
-                    <span class="password-error"></span>
+                    <input type="password" name="password" id="password" placeholder="*******" requried>
+                    <span class="password-error">
+                        <?php if (!empty($errors['password'])): ?>
+                            <?= htmlspecialchars($errors['password']) ?>
+                        <?php endif; ?>
+                    </span>
                 </div>
                 <div class="remember-field">
                     <input type="checkbox" name="remember" id="remember">

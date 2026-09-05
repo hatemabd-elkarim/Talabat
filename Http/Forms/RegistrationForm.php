@@ -94,6 +94,18 @@ class RegistrationForm
             $instance->throwIfFailed();
         }
 
+        $phone = $attributes['phone'] ?? '';
+        $user = User::findByPhone($phone);
+
+        if ($user) {
+            $instance->addError(
+                'phone',
+                'This phone number is already taken'
+            );
+
+            $instance->throwIfFailed();
+        }
+
         $instance->user = User::create($attributes);
 
         return $instance;

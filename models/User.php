@@ -21,6 +21,20 @@ class User
         return $result ?: null;
     }
 
+    public static function findByPhone(string $phone): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $result = $db->query(
+            'SELECT * FROM users WHERE phone = :phone',
+            [
+                'phone' => $phone
+            ]
+        )->find();
+
+        return $result ?: null;
+    }
+
     public static function create($attributes)
     {
         $db = App::resolve(Database::class);
