@@ -26,7 +26,7 @@
                 <p>Sign in to your account to continue.</p>
             </div>
 
-            <form class="login-form">
+            <form class="login-form" method="POST" action="/login">
                 <div class="email-field">
                     <label for="email">Email address</label>
                     <input type="email" name="email" id="email" placeholder="you@example.com">
@@ -45,7 +45,7 @@
                     <input type="submit" value="Sign in">
                 </div>
                 <div class="login-signup">
-                    <p>Don't have an account? <a href="#">Create one</a></p>
+                    <p>Don't have an account? <a href="/register">Create one</a></p>
                 </div>
             </form>
 
