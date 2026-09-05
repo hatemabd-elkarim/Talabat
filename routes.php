@@ -14,6 +14,7 @@ $router->get('/', [IndexController::class, 'index']);
 // Auth routes
 $router->get('/login', [AuthController::class, 'login']);
 $router->get('/register', [AuthController::class, 'register']);
+$router->post('/register', [AuthController::class, 'storeCustomer']);
 
 // Customer routes
 $router->get('/customer/home', [DashboardController::class, 'customerDashboard']);

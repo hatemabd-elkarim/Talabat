@@ -25,7 +25,7 @@
                 <p>Join thousands of happy customers getting food delivered.</p>
             </div>
 
-            <form class="register-form">
+            <form class="register-form" method="POST" action="/register">
                 <div class="register-fullname-field">
                     <label for="fullname">Full name</label>
                     <input type="text" name="fullname" id="fullname" placeholder="Your full name" required>
@@ -47,7 +47,7 @@
 
                 <div class="register-password-field">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Min. 6 characters" minlength="6" required>
+                    <input type="password" name="password" id="password" placeholder="Min. 8 characters" minlength="8" required>
                     <span class="password-error"></span>
                 </div>
 
@@ -58,7 +58,7 @@
                 </div>
                 <div class="register-location-field">
                     <label for="location">Delivery location</label>
-                    <input type="text" name="location" id="location" placeholder="Your city or delivery address" required>
+                    <input type="text" name="address" id="location" placeholder="Your delivery address" required>
                     <span class="location-error"></span>
                 </div>
 
