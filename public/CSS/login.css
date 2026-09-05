@@ -125,6 +125,10 @@
     animation: popIn 0.55s ease-out both;
 }
 
+.login-signup a:hover {
+    text-decoration: underline;
+}
+
 .email-field {
     animation-delay: 0.25s;
 }
