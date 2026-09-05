@@ -64,17 +64,6 @@ CREATE TABLE restaurants (
         ON UPDATE CASCADE
 );
 
-
--- ============================================
--- CATEGORIES
--- ============================================
-
-CREATE TABLE categories (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL UNIQUE
-);
-
-
 -- ============================================
 -- PRODUCTS
 -- Restaurants add food/products
@@ -92,7 +81,7 @@ CREATE TABLE products (
     is_available BOOLEAN DEFAULT TRUE,
 
     restaurant_id INT NOT NULL,
-    category_id INT,
+    category VARCHAR(100) NOT NULL,
 
     CONSTRAINT fk_product_restaurant
         FOREIGN KEY (restaurant_id)
@@ -266,17 +255,3 @@ CREATE TABLE notifications (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
-
--- ============================================
--- SAMPLE CATEGORIES
--- ============================================
-
-INSERT INTO categories (name) VALUES
-('Pizza'),
-('Burgers'),
-('Sushi'),
-('Healthy'),
-('Pasta'),
-('Egyptian'),
-('Desserts');
