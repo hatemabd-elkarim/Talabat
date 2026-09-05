@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace Http\Controllers;
 
@@ -17,7 +17,8 @@ class DashboardController
                 "reviews" => 120,
                 "distance" => "1.2 km",
                 "delivery_time" => "25-35 min",
-                "delivery_fee" => 25
+                "delivery_fee" => 25,
+                "is_open" => true
             ],
             [
                 "id" => 2,
@@ -28,7 +29,8 @@ class DashboardController
                 "reviews" => 95,
                 "distance" => "2.1 km",
                 "delivery_time" => "30-40 min",
-                "delivery_fee" => 30
+                "delivery_fee" => 30,
+                "is_open" => true
             ],
             [
                 "id" => 3,
@@ -39,7 +41,8 @@ class DashboardController
                 "reviews" => 230,
                 "distance" => "2.8 km",
                 "delivery_time" => "20-30 min",
-                "delivery_fee" => 20
+                "delivery_fee" => 20,
+                "is_open" => false
             ]
         ];
 
@@ -54,7 +57,8 @@ class DashboardController
                 "reviews" => 340,
                 "distance" => "3.5 km",
                 "delivery_time" => "30-45 min",
-                "delivery_fee" => 25
+                "delivery_fee" => 25,
+                "is_open" => true
             ],
             [
                 "id" => 5,
@@ -65,7 +69,8 @@ class DashboardController
                 "reviews" => 180,
                 "distance" => "4.2 km",
                 "delivery_time" => "35-50 min",
-                "delivery_fee" => 40
+                "delivery_fee" => 40,
+                "is_open" => true
             ]
         ];
 
@@ -98,10 +103,24 @@ class DashboardController
                 "rating" => 4.6
             ]
         ];
+
+        $featuredProduct = !empty($recommendedProducts)
+            ? $recommendedProducts[array_rand($recommendedProducts)]
+            : null;
+
+        $allRestaurants = array_merge($nearRestaurants, $topRatedRestaurants);
+
+        $openRestaurantCount = count(array_filter(
+            $allRestaurants,
+            static fn(array $restaurant): bool => $restaurant['is_open']
+        ));
+
         view('customer/home.view.php', [
             'nearRestaurants' => $nearRestaurants,
             'topRatedRestaurants' => $topRatedRestaurants,
-            'recommendedProducts' => $recommendedProducts
+            'recommendedProducts' => $recommendedProducts,
+            'featuredProduct' => $featuredProduct,
+            'openRestaurantCount' => $openRestaurantCount
         ]);
     }
 }
