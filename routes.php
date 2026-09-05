@@ -24,3 +24,6 @@ $router->get('/customer/notifications', [NotificationController::class, 'showCus
 $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders']);
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
+
+// admin routes
+$router->get('/admin/home', [DashboardController::class, 'adminDashboard']);
