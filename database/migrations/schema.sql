@@ -87,12 +87,6 @@ CREATE TABLE products (
         FOREIGN KEY (restaurant_id)
         REFERENCES restaurants(id)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-
-    CONSTRAINT fk_product_category
-        FOREIGN KEY (category_id)
-        REFERENCES categories(id)
-        ON DELETE SET NULL
         ON UPDATE CASCADE
 );
 
