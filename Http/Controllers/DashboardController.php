@@ -1,6 +1,9 @@
-<?
+<?php
 
 namespace Http\Controllers;
+
+use Models\Admin;
+use Models\Restaurant;
 
 class DashboardController
 {
@@ -102,6 +105,19 @@ class DashboardController
             'nearRestaurants' => $nearRestaurants,
             'topRatedRestaurants' => $topRatedRestaurants,
             'recommendedProducts' => $recommendedProducts
+        ]);
+    }
+
+    public function adminDashboard()
+    {
+        $stats = Admin::getDashboardStats();
+
+        $topRestaurants = Restaurant::getTopRestaurants();
+
+        view('admin/dashboard.view.php', [
+            'activePage' => 'a-dashboard',
+            'stats' => $stats,
+            'topRestaurants' => $topRestaurants,
         ]);
     }
 }

@@ -7,6 +7,7 @@ use Http\Controllers\ProfileController;
 use Http\Controllers\NotificationController;
 use Http\Controllers\OrderController;
 use Http\Controllers\RestaurantController;
+use Http\Controllers\CouponController;
 
 // testing route
 $router->get('/', [IndexController::class, 'index']);
@@ -24,3 +25,14 @@ $router->get('/customer/notifications', [NotificationController::class, 'showCus
 $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders']);
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
+
+// admin routes
+$router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
+$router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);
+$router->post('/admin/restaurants/store', [RestaurantController::class, 'storeRestaurant']);
+$router->patch('/admin/restaurants/status', [RestaurantController::class, 'updateRestaurantStatus']);
+$router->get('/admin/coupons', [CouponController::class, 'adminCoupons']);
+$router->post('/admin/coupons/store', [CouponController::class, 'storeCoupon']);
+$router->post('/admin/coupons/update', [CouponController::class, 'updateCoupon']);
+$router->patch('/admin/coupons/status', [CouponController::class, 'updateCouponStatus']);
+$router->post('/admin/coupons/delete', [CouponController::class, 'deleteCoupon']);
