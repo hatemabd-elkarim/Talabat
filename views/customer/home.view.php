@@ -2,6 +2,7 @@
 include __DIR__ . '/../partials/header.view.php';
 include __DIR__ . '/nav.view.php';
 ?>
+<link rel="stylesheet" href="/CSS/customer-home.css">
 <main class="customer-home">
     <section class="customer-hero">
 

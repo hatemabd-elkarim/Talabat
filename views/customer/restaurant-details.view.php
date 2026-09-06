@@ -2,7 +2,7 @@
 include __DIR__ . '/../partials/header.view.php';
 include __DIR__ . '/nav.view.php';
 ?>
-
+<link rel="stylesheet" href="/CSS/restaurant-details.css">
 <main class="restaurant-page">
 
     <!-- Hero -->
