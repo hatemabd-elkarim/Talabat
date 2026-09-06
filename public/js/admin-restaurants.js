@@ -133,9 +133,6 @@ function filterRestaurants(query) {
 // =========================
 // Toggle enable / disable
 // =========================
-// TODO: once the Restaurant model exists, POST the new state to the
-// server here (e.g. POST /admin/restaurants/toggle) instead of only
-// updating the badge in the DOM.
 
 async function toggleRestaurantEnabled(checkbox, restaurantId) {
   const card = checkbox.closest(".restaurant-card");
@@ -234,7 +231,7 @@ async function saveRestaurant(event) {
   }
 
   try {
-    const response = await fetch("/admin/restaurants", {
+    const response = await fetch("/admin/restaurants/store", {
       method: "POST",
       body: formData,
     });
