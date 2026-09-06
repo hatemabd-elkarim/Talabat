@@ -145,14 +145,12 @@ include __DIR__ . '/nav.view.php';
     <div class="restaurant-content">
 
 
-        <!-- MENU -->
 
         <section class="tab-content active" id="menu">
 
             <div class="menu-layout">
 
 
-                <!-- Categories -->
 
                 <aside class="categories">
 
@@ -171,7 +169,6 @@ include __DIR__ . '/nav.view.php';
                 </aside>
 
 
-                <!-- Products -->
 
                 <div class="products">
 
@@ -220,7 +217,11 @@ include __DIR__ . '/nav.view.php';
 
                                         <button
                                             class="add-product"
-                                            data-product-id="<?= $product['id'] ?>">
+                                            data-product-id="<?= $product['id'] ?>"
+                                            data-product-name="<?= htmlspecialchars($product['name']) ?>"
+                                            data-product-price="<?= $product['price'] ?>"
+                                            data-product-image="<?= htmlspecialchars($product['image']) ?>"
+                                            data-restaurant-id="<?= $restaurant['id'] ?>">
                                             +
                                         </button>
 
@@ -241,7 +242,6 @@ include __DIR__ . '/nav.view.php';
         </section>
 
 
-        <!-- INFO -->
 
         <section class="tab-content" id="info">
 
@@ -358,7 +358,6 @@ include __DIR__ . '/nav.view.php';
         </section>
 
 
-        <!-- REVIEWS -->
 
         <section class="tab-content" id="reviews">
 
@@ -462,7 +461,7 @@ include __DIR__ . '/nav.view.php';
     </div>
 
 
-    <!-- WRITE REVIEW MODAL -->
+    
 
     <div class="modal-overlay" id="reviewModal">
 
@@ -512,6 +511,47 @@ include __DIR__ . '/nav.view.php';
     </div>
 
 </main>
+
+<script>
+
+if (!window.__addToCartDelegated) {
+    window.__addToCartDelegated = true;
+
+   
+    document.addEventListener('click', function(e) {
+        const button = e.target.closest('.add-product');
+        if (!button) return;
+
+        const product = {
+            id: button.dataset.productId,
+            name: button.dataset.productName,
+            price: parseFloat(button.dataset.productPrice),
+            image: button.dataset.productImage,
+            restaurantId: button.dataset.restaurantId,
+            qty: 1,
+        };
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push(product);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        const badge = document.querySelector('.cart-badge');
+        if (badge) {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.textContent = totalQty;
+        }
+
+        alert(product.name + ' تمت إضافته للكارت');
+    });
+}
+</script>
 
 <script src="/js/restaurant-details.js"></script>
 
