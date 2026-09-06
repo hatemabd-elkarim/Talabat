@@ -2,6 +2,9 @@
 
 namespace Http\Controllers;
 
+use Models\Restaurant;
+use Http\Forms\RestaurantForm;
+
 class RestaurantController
 {
     public function showRestaurantDetails()
@@ -202,5 +205,108 @@ class RestaurantController
             'products' => $products,
             'reviews' => $reviews
         ]);
+    }
+
+    public function adminRestaurants()
+    {
+        $restaurants = Restaurant::getRestaurants();
+
+        $enabledCount = count(
+            array_filter(
+                $restaurants,
+                fn($restaurant) => $restaurant['is_enabled']
+            )
+        );
+
+        view('admin/restaurants.view.php', [
+            'activePage' => 'a-restaurants',
+            'restaurants' => $restaurants,
+            'enabledCount' => $enabledCount,
+        ]);
+    }
+
+    public function storeRestaurant()
+    {
+        $form = RestaurantForm::validate([
+            'name' => $_POST['name'] ?? '',
+            'cuisine' => $_POST['cuisine'] ?? '',
+            'address' => $_POST['address'] ?? '',
+            'phone' => $_POST['phone'] ?? '',
+            'email' => $_POST['email'] ?? '',
+            'latitude' => $_POST['latitude'] ?? '',
+            'longitude' => $_POST['longitude'] ?? '',
+            'is_enabled' => $_POST['is_enabled'] ?? 0,
+
+            'logo' => $_FILES['logo'] ?? null,
+            'banner' => $_FILES['banner'] ?? null,
+        ]);
+
+        $name = $form->attributes['name'];
+
+        $logoName = $this->uploadRestaurantImage(
+            $_FILES['logo'] ?? null,
+            $name,
+            'logo'
+        );
+
+        $bannerName = $this->uploadRestaurantImage(
+            $_FILES['banner'] ?? null,
+            $name,
+            'banner'
+        );
+
+        $restaurant = Restaurant::createRestaurant([
+            'name' => $name,
+            'cuisine' => $form->attributes['cuisine'],
+            'address' => $form->attributes['address'],
+            'phone' => $form->attributes['phone'],
+            'email' => $form->attributes['email'],
+            'latitude' => $form->attributes['latitude'],
+            'longitude' => $form->attributes['longitude'],
+            'is_enabled' => $form->attributes['is_enabled'],
+            'logo' => $logoName,
+            'banner' => $bannerName,
+        ]);
+
+        header('Content-Type: application/json');
+
+        echo json_encode([
+            'success' => true,
+            'restaurant' => $restaurant
+        ]);
+    }
+
+    private function uploadRestaurantImage(
+        ?array $file,
+        string $restaurantName,
+        string $type
+    ): ?string {
+        if (!$file || $file['error'] === UPLOAD_ERR_NO_FILE) {
+            return null;
+        }
+
+        $uploadDirectory = __DIR__ . '/../../public/image_uploads/';
+
+        $safeName = preg_replace(
+            '/[^A-Za-z0-9_-]/',
+            '_',
+            $restaurantName
+        );
+
+        $extension = strtolower(
+            pathinfo($file['name'], PATHINFO_EXTENSION)
+        );
+
+        $uniqueHash = bin2hex(random_bytes(6));
+
+        $fileName = $safeName . '_' . $uniqueHash . '_' . $type . '.' . $extension;
+
+        $destination = $uploadDirectory . $fileName;
+
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            throw new \Exception('Failed to save image');
+        }
+
+        return $fileName;
     }
 }

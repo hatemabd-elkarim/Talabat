@@ -27,3 +27,5 @@ $router->get('/customer/restaurant-details', [RestaurantController::class, 'show
 
 // admin routes
 $router->get('/admin/home', [DashboardController::class, 'adminDashboard']);
+$router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);
+$router->post('/admin/restaurants', [RestaurantController::class, 'storeRestaurant']);
