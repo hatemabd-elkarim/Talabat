@@ -26,6 +26,6 @@ $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
 
 // admin routes
-$router->get('/admin/home', [DashboardController::class, 'adminDashboard']);
+$router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
 $router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);
 $router->post('/admin/restaurants', [RestaurantController::class, 'storeRestaurant']);
