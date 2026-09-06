@@ -124,7 +124,7 @@ include __DIR__ . '/nav.view.php';
                             <td>
                                 <div class="restaurant-cell">
                                     <img
-                                        src="/image_uploads/restaurants/<?= htmlspecialchars($r['image']) ?>"
+                                        src="/image_uploads/<?= htmlspecialchars($r['logo']) ?>"
                                         alt="<?= htmlspecialchars($r['name']) ?>">
                                     <div>
                                         <p class="restaurant-name"><?= htmlspecialchars($r['name']) ?></p>

@@ -41,11 +41,11 @@ include __DIR__ . '/nav.view.php';
                 data-id="<?= $r['id'] ?>"
                 data-search="<?= strtolower(htmlspecialchars($r['name'] . ' ' . $r['cuisine'])) ?>">
 
-                <div class="restaurant-cover" style="background-image:url('/image_uploads/restaurants/<?= htmlspecialchars($r['image']) ?>')">
+                <div class="restaurant-cover" style="background-image:url('/image_uploads/<?= htmlspecialchars($r['banner']) ?>')">
                     <div class="restaurant-cover-scrim"></div>
 
                     <div class="restaurant-cover-identity">
-                        <img class="restaurant-logo" src="/image_uploads/restaurants/<?= htmlspecialchars($r['image']) ?>"
+                        <img class="restaurant-logo" src="/image_uploads/<?= htmlspecialchars($r['logo']) ?>"
                             alt="<?= htmlspecialchars($r['name']) ?>">
                         <div>
                             <p class="restaurant-card-name"><?= htmlspecialchars($r['name']) ?></p>

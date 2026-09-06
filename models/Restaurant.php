@@ -53,6 +53,7 @@ class Restaurant
             restaurants.name,
             restaurants.cuisine,
             restaurants.logo,
+            restaurants.banner,
 
             restaurants.address_text AS address,
 
