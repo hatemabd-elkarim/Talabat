@@ -2,6 +2,9 @@
 
 namespace Http\Controllers;
 
+use Models\Admin;
+use Models\Restaurant;
+
 class DashboardController
 {
     public function customerDashboard()
@@ -121,6 +124,19 @@ class DashboardController
             'recommendedProducts' => $recommendedProducts,
             'featuredProduct' => $featuredProduct,
             'openRestaurantCount' => $openRestaurantCount
+        ]);
+    }
+
+    public function adminDashboard()
+    {
+        $stats = Admin::getDashboardStats();
+
+        $topRestaurants = Restaurant::getTopRestaurants();
+
+        view('admin/dashboard.view.php', [
+            'activePage' => 'a-dashboard',
+            'stats' => $stats,
+            'topRestaurants' => $topRestaurants,
         ]);
     }
 }

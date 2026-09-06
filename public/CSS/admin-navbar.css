@@ -1,0 +1,360 @@
+/* =========================
+   Admin Navbar
+========================= */
+
+.admin-navbar {
+  background-color: #1c1815;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 40;
+}
+
+.admin-navbar-container {
+  max-width: 1280px;
+  height: 64px;
+
+  margin: auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+}
+
+/* =========================
+   Logo
+========================= */
+
+.admin-logo {
+  border: none;
+  background: none;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.admin-logo-mark {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 9px;
+
+  background: linear-gradient(135deg, #ff5a1f, #e14a0f);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 3px 8px rgba(255, 90, 31, 0.35);
+}
+
+.admin-logo-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background-color: white;
+}
+
+.admin-logo-text {
+  font-size: 17px;
+  font-weight: 800;
+
+  color: white;
+
+  letter-spacing: -0.01em;
+}
+
+.admin-role-label {
+  font-size: 11px;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.35);
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* =========================
+   Nav Links
+========================= */
+
+.admin-nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  flex: 1;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+  background: none;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 13.5px;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.admin-nav-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.admin-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.admin-nav-link.active {
+  background-color: #ff5a1f;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255, 90, 31, 0.3);
+}
+
+/* =========================
+   User + Sign out
+========================= */
+
+.admin-user-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.admin-avatar {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  color: white;
+
+  font-size: 12px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.admin-user-name {
+  font-size: 13px;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  max-width: 110px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.admin-signout-button {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.admin-signout-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.admin-signout-button:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* =========================
+   Mobile Menu Button
+========================= */
+
+.admin-mobile-menu-button {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: none;
+
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+}
+
+.admin-mobile-menu-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* =========================
+   Mobile Menu
+========================= */
+
+.admin-mobile-menu {
+  display: none;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #1c1815;
+
+  padding: 12px 16px;
+}
+
+.admin-mobile-menu.show {
+  display: block;
+}
+
+.admin-mobile-menu button {
+  width: 100%;
+
+  border: none;
+  background: none;
+
+  text-align: left;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  cursor: pointer;
+}
+
+.admin-mobile-menu button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.admin-mobile-menu button.active {
+  background-color: #ff5a1f;
+  color: white;
+}
+
+.admin-mobile-divider {
+  height: 1px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  margin: 8px 0;
+}
+
+.admin-mobile-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px 14px;
+}
+
+.admin-mobile-user-name {
+  font-size: 13.5px;
+  font-weight: 600;
+
+  color: white;
+}
+
+.admin-mobile-user-email {
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.admin-sign-out {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.admin-sign-out:hover {
+  background-color: rgba(220, 38, 38, 0.15) !important;
+  color: #ff8080 !important;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 900px) {
+  .admin-nav-links,
+  .admin-user-actions {
+    display: none;
+  }
+
+  .admin-mobile-menu-button {
+    display: flex;
+  }
+
+  .admin-role-label {
+    display: none;
+  }
+}

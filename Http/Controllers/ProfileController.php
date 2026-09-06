@@ -2,23 +2,38 @@
 
 namespace Http\Controllers;
 
+use Core\App;
+
 class ProfileController
 {
     public function showCustomerProfile()
     {
+        $db = App::resolve('Core\Database');
+
+        $customerId = $_SESSION['user']['id'] ?? null;
+
+        if (!$customerId) {
+            redirect('/login');
+        }
+
+        $user = $db->query("
+            SELECT id, name, email, phone, role, address_text, created_at
+            FROM users
+            WHERE id = :id
+        ", ['id' => $customerId])->findOrFail();
+
         $customer = [
-            "id" => 1,
-            "name" => "Hatem Ayman",
-            "email" => "hatem@example.com",
-            "phone" => "+20 10 1234 5678",
-            "address" => "Cairo, Egypt",
-            "image" => "https://placehold.co/200x200",
-            "member_since" => "September 2026",
-            "total_orders" => 12
+            "id"           => $user['id'],
+            "name"         => $user['name'],
+            "email"        => $user['email'],
+            "phone"        => $user['phone'],
+            "role"         => ucfirst($user['role']),
+            "address"      => $user['address_text'] ?? 'Set your address',
+            "member_since" => date('F Y', strtotime($user['created_at'])),
         ];
 
         view('customer/profile.view.php', [
-            'customer' => $customer
+            'customer' => $customer,
         ]);
     }
 }

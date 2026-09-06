@@ -21,6 +21,14 @@ require basePath('routes.php'); // This file should interact with the $router in
 
 // 5. Capture Request Details
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$basePath = '/Talabat';
+
+if (str_starts_with($uri, $basePath)) {
+    $uri = substr($uri, strlen($basePath));
+}
+
+$uri = $uri ?: '/';
 $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
 
 // 6. Routing and Exception Handling
