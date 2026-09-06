@@ -137,24 +137,60 @@ function filterRestaurants(query) {
 // server here (e.g. POST /admin/restaurants/toggle) instead of only
 // updating the badge in the DOM.
 
-function toggleRestaurantEnabled(checkbox, restaurantId) {
+async function toggleRestaurantEnabled(checkbox, restaurantId) {
   const card = checkbox.closest(".restaurant-card");
+
   const badge = card.querySelector("[data-enabled-badge]");
+
   const label = checkbox
     .closest(".toggle-switch")
     .querySelector("[data-toggle-label]");
 
   const isEnabled = checkbox.checked;
 
+  // Update UI
   badge.textContent = isEnabled ? "Enabled" : "Disabled";
+
   badge.classList.toggle("badge-enabled", isEnabled);
   badge.classList.toggle("badge-disabled", !isEnabled);
+
   label.textContent = isEnabled ? "Enabled" : "Disabled";
 
-  showToast(
-    isEnabled ? "Restaurant enabled" : "Restaurant disabled",
-    "success",
-  );
+  // Send PATCH request
+  try {
+    const response = await fetch("/admin/restaurants/status", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `id=${restaurantId}&is_enabled=${isEnabled ? 1 : 0}`,
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error("Failed to update restaurant");
+    }
+
+    showToast(
+      isEnabled ? "Restaurant enabled" : "Restaurant disabled",
+      "success",
+    );
+  } catch (error) {
+    console.error(error);
+
+    // Revert UI if request failed
+    checkbox.checked = !isEnabled;
+
+    badge.textContent = !isEnabled ? "Enabled" : "Disabled";
+
+    badge.classList.toggle("badge-enabled", !isEnabled);
+    badge.classList.toggle("badge-disabled", isEnabled);
+
+    label.textContent = !isEnabled ? "Enabled" : "Disabled";
+
+    showToast("Failed to update restaurant", "error");
+  }
 }
 
 // =========================

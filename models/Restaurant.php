@@ -176,4 +176,21 @@ class Restaurant
             throw $e;
         }
     }
+
+    public static function updateRestaurantStatus(
+        int $id,
+        int $isEnabled
+    ): void {
+        $db = App::resolve(Database::class);
+
+        $db->query(
+            "UPDATE restaurants
+         SET is_enabled = :is_enabled
+         WHERE id = :id",
+            [
+                'is_enabled' => $isEnabled,
+                'id' => $id
+            ]
+        );
+    }
 }

@@ -276,6 +276,38 @@ class RestaurantController
         ]);
     }
 
+    public function updateRestaurantStatus()
+    {
+        parse_str(file_get_contents('php://input'), $data);
+
+        $id = $data['id'] ?? null;
+        $isEnabled = $data['is_enabled'] ?? null;
+
+        if ($id === null || $isEnabled === null) {
+            http_response_code(422);
+
+            header('Content-Type: application/json');
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid data'
+            ]);
+
+            return;
+        }
+
+        Restaurant::updateRestaurantStatus(
+            (int) $id,
+            (int) $isEnabled
+        );
+
+        header('Content-Type: application/json');
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
     private function uploadRestaurantImage(
         ?array $file,
         string $restaurantName,

@@ -29,3 +29,4 @@ $router->get('/customer/restaurant-details', [RestaurantController::class, 'show
 $router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
 $router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);
 $router->post('/admin/restaurants', [RestaurantController::class, 'storeRestaurant']);
+$router->patch('/admin/restaurants/status', [RestaurantController::class, 'updateRestaurantStatus']);

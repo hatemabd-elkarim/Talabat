@@ -80,8 +80,8 @@ include __DIR__ . '/nav.view.php';
                         <label class="toggle-switch">
                             <input
                                 type="checkbox"
-                                <?= $r['is_enabled'] ? 'checked' : '' ?>
-                                onchange="toggleRestaurantEnabled(this, '<?= $r['id'] ?>')">
+                                onchange="toggleRestaurantEnabled(this, <?= $r['id'] ?>)"
+                                <?= $r['is_enabled'] ? 'checked' : '' ?>>
                             <span class="toggle-slider"></span>
                             <span class="toggle-label" data-toggle-label>
                                 <?= $r['is_enabled'] ? 'Enabled' : 'Disabled' ?>
