@@ -1,8 +1,11 @@
+<?php
+
+$currentUser = $_SESSION['user'] ?? null;
+?>
 <nav class="navbar">
 
     <div class="navbar-container">
 
-        <!-- Logo -->
         <button class="logo" onclick="navigate('c-home')">
             <span class="logo-mark">
                 <span class="logo-dot"></span>
@@ -12,24 +15,21 @@
         </button>
 
 
-        <!-- Location -->
         <button class="location" onclick="navigate('c-profile')">
             <span class="location-label">Deliver to</span>
 
             <?php include '../public/assets/icons/map-pin.php' ?>
 
             <span class="location-address">
-                <?= htmlspecialchars($user['address_text'] ?? 'Set your location') ?>
+                <?= htmlspecialchars($currentUser['address_text'] ?? 'Set your location') ?>
             </span>
 
             <?php include '../public/assets/icons/chevron-down.php' ?>
         </button>
 
 
-        <!-- Right actions -->
         <div class="right-actions">
 
-            <!-- Cart -->
             <button
                 class="icon-button"
                 onclick="navigate('c-cart')"
@@ -40,7 +40,6 @@
             </button>
 
 
-            <!-- Notifications -->
             <button
                 class="icon-button"
                 onclick="navigate('c-notifications')"
@@ -51,7 +50,6 @@
             </button>
 
 
-            <!-- Profile -->
             <div class="profile-container">
 
                 <button
@@ -59,21 +57,20 @@
                     onclick="toggleProfile()">
 
                     <div class="avatar">
-                        <?php if (isset($user['name'])): ?>
-                            <?= strtoupper(substr($user['name'], 0, 1)) ?>
+                        <?php if (!empty($currentUser['name'])): ?>
+                            <?= strtoupper(substr($currentUser['name'], 0, 1)) ?>
                         <?php else: ?>
                             U
                         <?php endif; ?>
                     </div>
 
                     <span class="profile-name">
-                        <?= $user['name'] ?? 'User' ?>
+                        <?= htmlspecialchars($currentUser['name'] ?? 'User') ?>
                     </span>
 
                 </button>
 
 
-                <!-- Profile dropdown -->
                 <div
                     class="profile-dropdown"
                     id="profileDropdown">
@@ -107,7 +104,6 @@
             </div>
 
 
-            <!-- Mobile hamburger -->
             <button
                 class="mobile-menu-button"
                 onclick="toggleMobileMenu()">
@@ -119,7 +115,6 @@
     </div>
 
 
-    <!-- Mobile menu -->
     <div
         class="mobile-menu"
         id="mobileMenu">
