@@ -28,6 +28,9 @@ $router->get('/customer/restaurant-details', [RestaurantController::class, 'show
 $router->post('/customer/location', [ProfileController::class, 'updateLocation']);
 $router->post('/customer/restaurant-details/review',[RestaurantController::class, 'storeReview']);
 $router->post('/customer/coupon/apply', [CouponController::class, 'apply']);
+$router->get('/customer/notifications',[NotificationController::class, 'showCustomerNotifications']);
+$router->post('/customer/notifications/read', [NotificationController::class, 'markNotificationRead']);
+$router->post('/customer/notifications/read-all', [NotificationController::class, 'markAllNotificationsRead']);
 
 // Checkout / Payment routes
 $router->get('/customer/checkout', [OrderController::class, 'showCheckout']);
