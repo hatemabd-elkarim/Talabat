@@ -110,7 +110,7 @@ $filteredOrders = array_filter($orders, function ($o) use ($activeTab) {
   </div>
 
   <?php if (empty($filteredOrders)): ?>
-    <div class="empty-state">لا توجد طلبات في هذا القسم</div>
+    <div class="empty-state">Make your first order now!</div>
   <?php else: ?>
     <?php foreach ($filteredOrders as $order): ?>
       <?php $st = statusStyle($order['status']); ?>

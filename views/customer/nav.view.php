@@ -36,7 +36,7 @@ $currentUser = $_SESSION['user'] ?? null;
                 aria-label="Cart">
                 <?php include '../public/assets/icons/shopping-cart.php' ?>
 
-                <span class="badge cart-badge">2</span>
+                <span class="badge cart-badge"></span>
             </button>
 
 
