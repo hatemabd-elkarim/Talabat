@@ -298,9 +298,9 @@ include __DIR__ . '/nav.view.php';
                 <strong id="cartTotal">0.00 EGP</strong>
             </div>
 
-            <a href="/customer/checkout" class="btn-checkout" style="display:block; text-align:center; text-decoration:none;">
+            <button class="btn-checkout" onclick="navigate('c-checkout')">
                 Proceed to Checkout
-            </a>
+            </button>
 
         </div>
 
