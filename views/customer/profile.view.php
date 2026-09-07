@@ -21,8 +21,8 @@ $user_image   = "https://ui-avatars.com/api/?name=" . urlencode($user_name) . "&
 
         <div class="profile-header">
             <h1>My Profile</h1>
-            <button class="edit-button" type="button">
-                <i class="fa-solid fa-pen"></i> Edit
+            <button class="edit-button" type="button" id="editButton">
+                <?php include __DIR__ . '/../../public/assets/icons/edit.php'; ?>Edit
             </button>
         </div>
 
@@ -41,25 +41,39 @@ $user_image   = "https://ui-avatars.com/api/?name=" . urlencode($user_name) . "&
             <div class="full-name">
                 <label>Full name</label>
                 <div class="value-box">
-                    <i class="fa-solid fa-user"></i>
-                    <span><?php echo htmlspecialchars($user_name); ?></span>
+                    <?php include __DIR__ . '/../../public/assets/icons/users.php'; ?>
+                    <input
+                        type="text"
+                        id="nameValue"
+                        value="<?php echo htmlspecialchars($user_name); ?>"
+                        readonly>
                 </div>
             </div>
 
             <div class="email-address">
                 <label>Email address</label>
                 <div class="value-box">
-                    <i class="fa-solid fa-envelope"></i>
-                    <span><?php echo htmlspecialchars($user_email); ?></span>
+                    <?php include __DIR__ . '/../../public/assets/icons/mail.php'; ?>
+                    <input
+                        type="email"
+                        id="emailValue"
+                        value="<?php echo htmlspecialchars($user_email); ?>"
+                        readonly>
                 </div>
+                <small class="field-error" id="emailError"></small>
             </div>
 
             <div class="phone-number">
                 <label>Phone number</label>
                 <div class="value-box">
-                    <i class="fa-solid fa-phone"></i>
-                    <span><?php echo htmlspecialchars($user_phone); ?></span>
+                    <?php include __DIR__ . '/../../public/assets/icons/phone.php'; ?>
+                    <input
+                        type="text"
+                        id="phoneValue"
+                        value="<?php echo htmlspecialchars($user_phone); ?>"
+                        readonly>
                 </div>
+                <small class="field-error" id="phoneError"></small>
             </div>
         </div>
 
@@ -69,7 +83,12 @@ $user_image   = "https://ui-avatars.com/api/?name=" . urlencode($user_name) . "&
             <div class="street-address">
                 <label>Street address</label>
                 <div class="value-box">
-                    <span><?php echo htmlspecialchars($user_address); ?></span>
+                    <?php include __DIR__ . '/../../public/assets/icons/map-pin.php'; ?>
+                    <input
+                        type="text"
+                        id="addressValue"
+                        value="<?php echo htmlspecialchars($user_address); ?>"
+                        readonly>
                 </div>
             </div>
         </div>
@@ -84,5 +103,6 @@ $user_image   = "https://ui-avatars.com/api/?name=" . urlencode($user_name) . "&
     </div>
 </div>
 
+<script src="/js/profile.js"></script>
 <?php
 include __DIR__ . '/../partials/footer.view.php';

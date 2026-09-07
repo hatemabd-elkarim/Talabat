@@ -27,7 +27,7 @@ $currentUser = $_SESSION['user'] ?? null;
 
             <?php include '../public/assets/icons/map-pin.php' ?>
 
-            <span class="location-address">
+            <span class="location-address" id="locationAddress">
                 <?= htmlspecialchars($currentUser['address_text'] ?? 'Set your location') ?>
             </span>
 

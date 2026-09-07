@@ -31,6 +31,7 @@ $router->post('/customer/coupon/apply', [CouponController::class, 'apply']);
 $router->get('/customer/notifications',[NotificationController::class, 'showCustomerNotifications']);
 $router->post('/customer/notifications/read', [NotificationController::class, 'markNotificationRead']);
 $router->post('/customer/notifications/read-all', [NotificationController::class, 'markAllNotificationsRead']);
+$router->post('/customer/profile/update', [ProfileController::class, 'update']);
 
 // Checkout / Payment routes
 $router->get('/customer/checkout', [OrderController::class, 'showCheckout']);
