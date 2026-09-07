@@ -2,46 +2,62 @@
 
 namespace Http\Controllers;
 
+use Core\Session;
+use Models\Notification;
+
 class NotificationController
 {
     public function showCustomerNotifications()
     {
-        $notifications = [
-            [
-                "id" => 1,
-                "type" => "success",
-                "title" => "Order Delivered",
-                "message" => "Your order #1024 has been delivered successfully.",
-                "time" => "10 minutes ago",
-                "is_read" => false
-            ],
-            [
-                "id" => 2,
-                "type" => "delivery",
-                "title" => "Out for Delivery",
-                "message" => "Your order #1025 is on its way.",
-                "time" => "1 hour ago",
-                "is_read" => false
-            ],
-            [
-                "id" => 3,
-                "type" => "preparing",
-                "title" => "Preparing Your Order",
-                "message" => "Burger Factory is preparing your food.",
-                "time" => "2 hours ago",
-                "is_read" => true
-            ],
-            [
-                "id" => 4,
-                "type" => "promotion",
-                "title" => "Special Offer",
-                "message" => "Get 20% off your next order using QUICK20.",
-                "time" => "Yesterday",
-                "is_read" => true
-            ]
-        ];
+        $userId = (int) Session::get('user')['id'];
+
+        $notifications = Notification::getForUser($userId);
+
+        $unreadCount = Notification::getUnreadCount($userId);
+
         view('customer/notifications.view.php', [
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'unreadCount' => $unreadCount
+        ]);
+    }
+
+    public function markNotificationRead()
+    {
+        $userId = (int) Session::get('user')['id'];
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $notificationId = (int) ($data['notification_id'] ?? 0);
+
+        if ($notificationId <= 0) {
+            http_response_code(400);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid notification ID'
+            ]);
+
+            return;
+        }
+
+        Notification::markAsRead(
+            $notificationId,
+            $userId
+        );
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
+
+    public function markAllNotificationsRead()
+    {
+        $userId = (int) Session::get('user')['id'];
+
+        Notification::markAllAsRead($userId);
+
+        echo json_encode([
+            'success' => true
         ]);
     }
 }

@@ -151,4 +151,33 @@ class Coupon
             ]
         );
     }
+
+    public static function findValidCoupon(string $code, float $subtotal): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $coupon = $db->query(
+            "SELECT
+            id,
+            code,
+            discount_percent,
+            max_discount,
+            min_order,
+            usage_limit,
+            expires_at,
+            is_active
+         FROM coupons
+         WHERE code = :code
+           AND is_active = TRUE
+           AND (expires_at IS NULL OR expires_at >= NOW())
+           AND min_order <= :subtotal
+         LIMIT 1",
+            [
+                'code' => $code,
+                'subtotal' => $subtotal
+            ]
+        )->find();
+
+        return $coupon ?: null;
+    }
 }

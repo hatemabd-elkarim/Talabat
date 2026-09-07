@@ -1,5 +1,12 @@
 <?php
 
+use Core\Session;
+use Models\Notification;
+
+$userId = (int) Session::get('user')['id'];
+
+$unreadCount = Notification::getUnreadCount($userId);
+
 $currentUser = $_SESSION['user'] ?? null;
 ?>
 <nav class="navbar">
@@ -20,7 +27,7 @@ $currentUser = $_SESSION['user'] ?? null;
 
             <?php include '../public/assets/icons/map-pin.php' ?>
 
-            <span class="location-address">
+            <span class="location-address" id="locationAddress">
                 <?= htmlspecialchars($currentUser['address_text'] ?? 'Set your location') ?>
             </span>
 
@@ -36,7 +43,7 @@ $currentUser = $_SESSION['user'] ?? null;
                 aria-label="Cart">
                 <?php include '../public/assets/icons/shopping-cart.php' ?>
 
-                <span class="badge cart-badge">2</span>
+                <span class="badge cart-badge"></span>
             </button>
 
 
@@ -46,7 +53,9 @@ $currentUser = $_SESSION['user'] ?? null;
                 aria-label="Notifications">
                 <?php include '../public/assets/icons/bell.php' ?>
 
-                <span class="badge notification-badge">3</span>
+                <span class="badge notification-badge" id="notificationBadge">
+                    <?= $unreadCount ?>
+                </span>
             </button>
 
 

@@ -110,7 +110,7 @@ $filteredOrders = array_filter($orders, function ($o) use ($activeTab) {
   </div>
 
   <?php if (empty($filteredOrders)): ?>
-    <div class="empty-state">لا توجد طلبات في هذا القسم</div>
+    <div class="empty-state">Make your first order now!</div>
   <?php else: ?>
     <?php foreach ($filteredOrders as $order): ?>
       <?php $st = statusStyle($order['status']); ?>
@@ -132,7 +132,7 @@ $filteredOrders = array_filter($orders, function ($o) use ($activeTab) {
             <div class="price"><?= number_format($order['total_price'], 2) ?> EGP</div>
             <div class="date"><?= htmlspecialchars(date('M j, Y', strtotime($order['created_at']))) ?></div>
           </div>
-          <a href="#" class="view-details">View details ›</a>
+          <!-- <a href="#" class="view-details">View details ›</a> -->
         </div>
         <?php if (!empty($order['rating'])): ?>
           <div class="review">

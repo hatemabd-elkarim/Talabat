@@ -3,6 +3,7 @@ include __DIR__ . '/../partials/header.view.php';
 include __DIR__ . '/nav.view.php';
 ?>
 <link rel="stylesheet" href="/CSS/customer-home.css">
+<link rel="stylesheet" href="/CSS/cart.css">
 <main class="customer-home">
     <section class="customer-hero">
 
@@ -13,7 +14,7 @@ include __DIR__ . '/nav.view.php';
             <span class="delivery-location-label">Deliver to</span>
 
             <span class="delivery-location-address">
-                <?= htmlspecialchars($user['address_text'] ?? 'Set your location') ?>
+                <?= htmlspecialchars($currentUser['address_text'] ?? 'Set your location') ?>
             </span>
         </div>
         <div class="restaurant-status">
@@ -67,21 +68,34 @@ include __DIR__ . '/nav.view.php';
         <?php if ($featuredProduct !== null): ?>
             <article
                 class="featured-product"
-                data-product-id="<?= htmlspecialchars((string) $featuredProduct['id']) ?>">
+                data-product-id="<?= htmlspecialchars((string) $featuredProduct['id']) ?>"
+                data-product-name="<?= htmlspecialchars($featuredProduct['name']) ?>"
+                data-product-price="<?= htmlspecialchars((string) $featuredProduct['price']) ?>"
+                data-product-image="/image_uploads/<?= htmlspecialchars($featuredProduct['image']) ?>"
+                data-restaurant-id="<?= htmlspecialchars((string) $featuredProduct['restaurant_id']) ?>"
+                data-delivery-fee="<?= htmlspecialchars((string) $featuredProduct['delivery_fee']) ?>"
+                data-delivery-time="<?= htmlspecialchars((string) $featuredProduct['delivery_time']) ?>">
+
                 <div class="featured-product-content">
                     <span class="featured-product-label">Today's special</span>
+
                     <h3><?= htmlspecialchars($featuredProduct['name']) ?></h3>
+
                     <p class="featured-product-description">
-                        <?= htmlspecialchars($featuredProduct['category']) ?> from <?= htmlspecialchars($featuredProduct['restaurant']) ?>
+                        <?= htmlspecialchars($featuredProduct['category']) ?>
+                        from
+                        <?= htmlspecialchars($featuredProduct['restaurant']) ?>
                     </p>
+
                     <div class="featured-product-footer">
                         <strong class="featured-product-price">
                             <?= htmlspecialchars((string) $featuredProduct['price']) ?> EGP
                         </strong>
+
                         <button
                             type="button"
                             class="featured-product-action"
-                            onclick="window.location.href='/product?id=<?= htmlspecialchars((string) $featuredProduct['id']) ?>'">
+                            id="featuredProductOrder">
                             Order now
                         </button>
                     </div>
@@ -90,7 +104,7 @@ include __DIR__ . '/nav.view.php';
                 <div class="featured-product-media">
                     <img
                         class="featured-product-image"
-                        src="<?= htmlspecialchars($featuredProduct['image']) ?>"
+                        src="/image_uploads/<?= htmlspecialchars($featuredProduct['image']) ?>"
                         alt="<?= htmlspecialchars($featuredProduct['name']) ?>"
                         loading="lazy">
                 </div>
@@ -103,41 +117,61 @@ include __DIR__ . '/nav.view.php';
     <section class="restaurant-section" aria-labelledby="near-restaurants-title">
         <div class="section-heading">
             <h2 id="near-restaurants-title">Restaurants near you</h2>
-            <button class="sort-button" type="button">Nearest</button>
         </div>
 
         <div class="restaurant-grid">
-            <?php foreach ($nearRestaurants as $restaurant): ?>
-                <article class="restaurant-card"
-                    onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
-                    <div class="restaurant-card-image">
-                        <img
-                            src="<?= htmlspecialchars($restaurant['image']) ?>"
-                            alt="<?= htmlspecialchars($restaurant['name']) ?>"
-                            loading="lazy">
-                        <span class="restaurant-rating">
-                            <?= htmlspecialchars((string) $restaurant['rating']) ?>
-                        </span>
-                    </div>
+            <?php if ($nearRestaurants): ?>
+                <?php foreach ($nearRestaurants as $restaurant): ?>
+                    <article class="restaurant-card"
+                        data-search="<?= htmlspecialchars(strtolower($restaurant['name'] . ' ' . $restaurant['cuisine'])) ?>"
+                        onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
 
-                    <div class="restaurant-card-content">
-                        <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
-                        <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
-                        <div class="restaurant-card-meta">
+                        <div class="restaurant-card-image">
 
-                            <span>
-                                <?php include '../public/assets/icons/time.php' ?>
-                                <?= htmlspecialchars($restaurant['delivery_time']) ?>
+                            <img
+                                src="/image_uploads/<?= htmlspecialchars($restaurant['image']) ?>"
+                                alt="<?= htmlspecialchars($restaurant['name']) ?>"
+                                loading="lazy">
+
+                            <div class="restaurant-card-overlay">
+                                <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
+                                <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+                            </div>
+
+                            <span class="restaurant-rating">
+                                <?php include '../public/assets/icons/star.php' ?>
+                                <?= htmlspecialchars((string) $restaurant['rating']) ?>
                             </span>
-                            <span>
-                                <?php include '../public/assets/icons/map-pin.php' ?>
-                                <?= htmlspecialchars($restaurant['distance']) ?>
-                            </span>
-                            <span><?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP delivery</span>
+
                         </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
+
+                        <div class="restaurant-card-content">
+
+                            <div class="restaurant-card-meta">
+
+                                <span>
+                                    <?php include '../public/assets/icons/time.php' ?>
+                                    <?= htmlspecialchars($restaurant['delivery_time']) ?> min
+                                </span>
+
+                                <span>
+                                    <?php include '../public/assets/icons/map-pin.php' ?>
+                                    <?= htmlspecialchars($restaurant['distance']) ?> KM
+                                </span>
+
+                                <span>
+                                    <?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="empty-state">Please set up your location.</p>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -146,40 +180,66 @@ include __DIR__ . '/nav.view.php';
         <h2 id="top-rated-title">Top rated restaurants</h2>
 
         <div class="restaurant-grid">
-            <?php foreach ($topRatedRestaurants as $restaurant): ?>
-                <article class="restaurant-card"
-                    onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
-                    <div class="restaurant-card-image">
-                        <img
-                            src="<?= htmlspecialchars($restaurant['image']) ?>"
-                            alt="<?= htmlspecialchars($restaurant['name']) ?>"
-                            loading="lazy">
-                        <span class="restaurant-rating">
-                            <?= htmlspecialchars((string) $restaurant['rating']) ?>
-                        </span>
-                    </div>
+            <?php if ($topRatedRestaurants): ?>
+                <?php foreach ($topRatedRestaurants as $restaurant): ?>
+                    <article class="restaurant-card"
+                        data-search="<?= htmlspecialchars(strtolower($restaurant['name'] . ' ' . $restaurant['cuisine'])) ?>"
+                        onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
 
-                    <div class="restaurant-card-content">
-                        <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
-                        <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
-                        <div class="restaurant-card-meta">
-                            <span>
-                                <?php include '../public/assets/icons/time.php' ?>
-                                <?= htmlspecialchars($restaurant['delivery_time']) ?>
+                        <div class="restaurant-card-image">
+
+                            <img
+                                src="/image_uploads/<?= htmlspecialchars($restaurant['image']) ?>"
+                                alt="<?= htmlspecialchars($restaurant['name']) ?>"
+                                loading="lazy">
+
+                            <div class="restaurant-card-overlay">
+                                <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
+                                <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+                            </div>
+
+                            <span class="restaurant-rating">
+                                <?php include '../public/assets/icons/star.php' ?>
+                                <?= htmlspecialchars((string) $restaurant['rating']) ?>
                             </span>
-                            <span>
-                                <?php include '../public/assets/icons/map-pin.php' ?>
-                                <?= htmlspecialchars($restaurant['distance']) ?>
-                            </span>
-                            <span><?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP delivery</span>
+
                         </div>
-                    </div>
-                </article>
-            <?php endforeach; ?>
+
+                        <div class="restaurant-card-content">
+
+                            <div class="restaurant-card-meta">
+
+                                <span>
+                                    <?php include '../public/assets/icons/time.php' ?>
+                                    <?= htmlspecialchars($restaurant['delivery_time']) ?> min
+                                </span>
+
+                                <span>
+                                    <?php include '../public/assets/icons/map-pin.php' ?>
+                                    <?= htmlspecialchars($restaurant['distance']) ?> KM
+                                </span>
+
+                                <span>
+                                    <?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="empty-state">Please set up your location.</p>
+            <?php endif; ?>
         </div>
     </section>
 
 </main>
+
+<script src="/js/location.js"></script>
+<script src="/js/search.js"></script>
+<script src="/js/cart.js"></script>
 
 <?php
 include __DIR__ . '/../partials/footer.view.php';

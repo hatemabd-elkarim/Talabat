@@ -9,7 +9,7 @@ include __DIR__ . '/nav.view.php';
 
     <section
         class="restaurant-hero"
-        style="background-image: url('<?= htmlspecialchars($restaurant['cover_image']) ?>')">
+        style="background-image: url('/image_uploads/<?= htmlspecialchars($restaurant['banner']) ?>')">
 
         <div class="hero-overlay"></div>
 
@@ -158,9 +158,9 @@ include __DIR__ . '/nav.view.php';
 
                         <button
                             class="category <?= $index === 0 ? 'active' : '' ?>"
-                            data-category="<?= $category['id'] ?>">
+                            data-category="<?= htmlspecialchars($category) ?>">
 
-                            <?= htmlspecialchars($category['name']) ?>
+                            <?= htmlspecialchars($category) ?>
 
                         </button>
 
@@ -176,7 +176,7 @@ include __DIR__ . '/nav.view.php';
 
                         <article
                             class="product-card <?= !$product['is_available'] ? 'unavailable-card' : '' ?>"
-                            data-category="<?= $product['category_id'] ?>">
+                            data-category="<?= htmlspecialchars($product['category']) ?>">
 
                             <?php if (!$product['is_available']): ?>
 
@@ -187,7 +187,7 @@ include __DIR__ . '/nav.view.php';
                             <?php endif; ?>
 
                             <img
-                                src="<?= htmlspecialchars($product['image']) ?>"
+                                src="/image_uploads/<?= htmlspecialchars($product['image']) ?>"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
                                 class="product-image">
 
@@ -220,8 +220,11 @@ include __DIR__ . '/nav.view.php';
                                             data-product-id="<?= $product['id'] ?>"
                                             data-product-name="<?= htmlspecialchars($product['name']) ?>"
                                             data-product-price="<?= $product['price'] ?>"
-                                            data-product-image="<?= htmlspecialchars($product['image']) ?>"
-                                            data-restaurant-id="<?= $restaurant['id'] ?>">
+                                            data-product-image="/image_uploads/<?= htmlspecialchars($product['image']) ?>"
+                                            data-restaurant-id="<?= $restaurant['id'] ?>"
+                                            data-delivery-fee=" <?= $restaurant['delivery_fee'] ?>"
+                                            data-delivery-time="<?= $restaurant['delivery_time'] ?>"
+                                            >
                                             +
                                         </button>
 
@@ -406,7 +409,9 @@ include __DIR__ . '/nav.view.php';
 
                     <?php foreach ($reviews as $review): ?>
 
-                        <article class="review-card">
+                        <article
+                            class="review-card"
+                            data-review-id="<?= htmlspecialchars((string) $review['id']) ?>">
 
                             <div class="review-header">
 
@@ -461,7 +466,7 @@ include __DIR__ . '/nav.view.php';
     </div>
 
 
-    
+
 
     <div class="modal-overlay" id="reviewModal">
 
@@ -511,47 +516,6 @@ include __DIR__ . '/nav.view.php';
     </div>
 
 </main>
-
-<script>
-
-if (!window.__addToCartDelegated) {
-    window.__addToCartDelegated = true;
-
-   
-    document.addEventListener('click', function(e) {
-        const button = e.target.closest('.add-product');
-        if (!button) return;
-
-        const product = {
-            id: button.dataset.productId,
-            name: button.dataset.productName,
-            price: parseFloat(button.dataset.productPrice),
-            image: button.dataset.productImage,
-            restaurantId: button.dataset.restaurantId,
-            qty: 1,
-        };
-
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        const existing = cart.find(item => item.id === product.id);
-        if (existing) {
-            existing.qty += 1;
-        } else {
-            cart.push(product);
-        }
-
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        const badge = document.querySelector('.cart-badge');
-        if (badge) {
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            badge.textContent = totalQty;
-        }
-
-        alert(product.name + ' تمت إضافته للكارت');
-    });
-}
-</script>
 
 <script src="/js/restaurant-details.js"></script>
 

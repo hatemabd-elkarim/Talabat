@@ -7,6 +7,22 @@ use Core\Database;
 
 class User
 {
+    public static function findById(int $id): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $user = $db->query(
+            "SELECT *
+         FROM users
+         WHERE id = :id",
+            [
+                'id' => $id
+            ]
+        )->find();
+
+        return $user ?: null;
+    }
+
     public static function findByEmail(string $email): ?array
     {
         $db = App::resolve(Database::class);
@@ -77,6 +93,7 @@ class User
             'email' => $user['email'],
             'name' => $user['name'],
             'role' => $user['role'],
+            'address_text' => $user['address_text'],
         ];
 
         session_regenerate_id(true);
@@ -90,5 +107,25 @@ class User
         // to delete the session cookie
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+    }
+
+    public static function updateLocation(
+        int $id,
+        float $latitude,
+        float $longitude
+    ): void {
+        $db = App::resolve(Database::class);
+
+        $db->query(
+            "UPDATE users
+         SET latitude = :latitude,
+             longitude = :longitude
+         WHERE id = :id",
+            [
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'id' => $id
+            ]
+        );
     }
 }
