@@ -8,6 +8,12 @@
 @import url("profile.css");
 @import url("admin-navbar.css");
 @import url("admin-dashboard.css");
+@import url("restaurant/header.css");
+@import url("restaurant/dashboard.css");
+@import url("restaurant/products.css");
+@import url("restaurant/categories.css");
+@import url("restaurant/orders.css");
+@import url("restaurant/profile.css");
 
 /* Global styles */
 

@@ -1,0 +1,188 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.restaurant-navbar {
+    background-color: #1b1816;
+    border-bottom: none;
+}
+
+.restaurant-navbar .navbar-container {
+    max-width: 1280px;
+    height: 64px;
+}
+
+.restaurant-navbar .logo-text {
+    color: #f7f3ef;
+}
+
+.restaurant-navbar .logo,
+.restaurant-navbar .logo:hover,
+.restaurant-navbar .logo:focus,
+.restaurant-navbar .logo:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+.restaurant-context {
+    margin-left: 24px;
+}
+
+.restaurant-navbar .location-label {
+    color: #8f8882;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.restaurant-navbar .location-address {
+    color: #f7f3ef;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.restaurant-navigation {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 24px;
+}
+
+.restaurant-navigation a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 14px;
+
+    border-radius: 22px;
+
+    color: #aaa29b;
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.restaurant-navigation a:hover {
+    background-color: #302a26;
+    color: #ffffff;
+}
+
+.restaurant-navigation a:focus-visible {
+    outline: 2px solid #ff5a1f;
+    outline-offset: 2px;
+}
+
+.restaurant-navigation a.active {
+    background-color: #ff5a1f;
+    color: #ffffff;
+}
+
+.restaurant-navbar .profile-button {
+    color: #f7f3ef;
+}
+
+.restaurant-navbar .profile-button:hover {
+    background-color: #302a26;
+}
+
+.restaurant-navbar .avatar {
+    background-color: #302a26;
+    color: #ffffff;
+}
+
+.restaurant-navbar .profile-name {
+    color: #f7f3ef;
+}
+
+.restaurant-navbar .profile-dropdown a {
+    display: block;
+    width: 100%;
+
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    color: #241f1b;
+    font-size: 14px;
+    text-align: left;
+    text-decoration: none;
+
+    transition: background-color 0.2s ease;
+}
+
+.restaurant-navbar .profile-dropdown a:hover {
+    background-color: #f5f5f5;
+}
+
+.restaurant-navbar .mobile-menu-button {
+    border-color: #4a423d;
+    background-color: #302a26;
+}
+
+.restaurant-navbar .mobile-menu-button svg {
+    color: #ffffff;
+}
+
+.restaurant-navbar .mobile-menu a {
+    display: block;
+    width: 100%;
+
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    color: #241f1b;
+    font-size: 14px;
+    text-decoration: none;
+
+    transition: background-color 0.2s ease;
+}
+
+.restaurant-navbar .mobile-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+.restaurant-navbar .right-actions {
+    margin-left: auto;
+}
+
+@media (max-width: 900px) {
+
+    .restaurant-navigation {
+        display: none;
+    }
+
+    .restaurant-context {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .restaurant-navbar .navbar-container {
+        height: 60px;
+        padding: 0 16px;
+    }
+
+    .restaurant-navbar .profile-name {
+        display: none;
+    }
+}

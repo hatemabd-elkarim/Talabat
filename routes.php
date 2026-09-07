@@ -26,6 +26,13 @@ $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders'])
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
 
+// Restaurant routes
+$router->get('/restaurant/dashboard', [RestaurantController::class, 'dashboard']);
+$router->get('/restaurant/products', [RestaurantController::class, 'products']);
+$router->get('/restaurant/categories', [RestaurantController::class, 'categories']);
+$router->get('/restaurant/orders', [RestaurantController::class, 'orders']);
+$router->get('/restaurant/profile', [RestaurantController::class, 'profile']);
+
 // admin routes
 $router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
 $router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);
