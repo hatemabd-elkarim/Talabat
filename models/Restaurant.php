@@ -7,6 +7,105 @@ use Core\Database;
 
 class Restaurant
 {
+    public static function getNearRestaurants(
+        float $latitude,
+        float $longitude
+    ): array {
+        $db = App::resolve(Database::class);
+
+        return $db->query(
+            "SELECT
+            r.id,
+            r.name,
+            r.logo AS image,
+            r.cuisine,
+            r.delivery_time,
+            r.delivery_fee,
+            r.is_open,
+
+            ROUND(COALESCE(AVG(rt.rating), 0), 1) AS rating,
+            COUNT(rt.id) AS reviews,
+
+            ROUND(
+                ST_Distance_Sphere(
+                    POINT(:longitude, :latitude),
+                    POINT(r.longitude, r.latitude)
+                ) / 1000,
+                1
+            ) AS distance
+
+        FROM restaurants r
+
+        LEFT JOIN ratings rt
+            ON rt.restaurant_id = r.id
+
+        WHERE r.is_enabled = TRUE
+          AND r.latitude IS NOT NULL
+          AND r.longitude IS NOT NULL
+
+        GROUP BY r.id
+
+        HAVING distance <= 10
+
+        ORDER BY distance ASC",
+            [
+                'latitude' => $latitude,
+                'longitude' => $longitude
+            ]
+        )->get();
+    }
+
+    public static function getRandomProductFromRestaurants(
+        array $restaurantIds
+    ): ?array {
+        if (empty($restaurantIds)) {
+            return null;
+        }
+
+        $db = App::resolve(Database::class);
+
+        $placeholders = [];
+
+        foreach ($restaurantIds as $index => $id) {
+            $placeholders[] = ":restaurant{$index}";
+        }
+
+        $sql = "
+        SELECT
+            p.id,
+            p.name,
+            p.description,
+            p.price,
+            p.image,
+            p.category,
+            r.name AS restaurant
+
+        FROM products p
+
+        INNER JOIN restaurants r
+            ON r.id = p.restaurant_id
+
+        WHERE p.restaurant_id IN (" . implode(',', $placeholders) . ")
+          AND p.is_available = TRUE
+          AND r.is_enabled = TRUE
+
+        ORDER BY RAND()
+
+        LIMIT 1
+    ";
+
+        $params = [];
+
+        foreach ($restaurantIds as $index => $id) {
+            $params["restaurant{$index}"] = $id;
+        }
+
+        $product = $db->query($sql, $params)->find();
+
+        return $product ?: null;
+    }
+
+
     public static function getTopRestaurants(): array
     {
         $db = App::resolve(Database::class);

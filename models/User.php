@@ -7,6 +7,22 @@ use Core\Database;
 
 class User
 {
+    public static function findById(int $id): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $user = $db->query(
+            "SELECT *
+         FROM users
+         WHERE id = :id",
+            [
+                'id' => $id
+            ]
+        )->find();
+
+        return $user ?: null;
+    }
+
     public static function findByEmail(string $email): ?array
     {
         $db = App::resolve(Database::class);
