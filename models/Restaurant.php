@@ -190,7 +190,10 @@ class Restaurant
             p.price,
             p.image,
             p.category,
-            r.name AS restaurant
+            r.name AS restaurant,
+            r.id AS restaurant_id,
+            r.delivery_fee,
+            r.delivery_time
 
         FROM products p
 

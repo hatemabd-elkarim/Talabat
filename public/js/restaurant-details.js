@@ -72,16 +72,16 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function (event) {
       event.stopPropagation();
 
-     const product = {
-       id: button.dataset.productId,
-       name: button.dataset.productName,
-       price: parseFloat(button.dataset.productPrice),
-       image: button.dataset.productImage,
-       restaurantId: button.dataset.restaurantId,
-       deliveryFee: parseFloat(button.dataset.deliveryFee),
-       deliveryTime: parseInt(button.dataset.deliveryTime),
-       qty: 1,
-     };
+      const product = {
+        id: button.dataset.productId,
+        name: button.dataset.productName,
+        price: parseFloat(button.dataset.productPrice),
+        image: button.dataset.productImage,
+        restaurantId: button.dataset.restaurantId,
+        deliveryFee: parseFloat(button.dataset.deliveryFee),
+        deliveryTime: parseInt(button.dataset.deliveryTime),
+        qty: 1,
+      };
 
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
 

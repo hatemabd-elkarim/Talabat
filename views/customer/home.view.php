@@ -3,6 +3,7 @@ include __DIR__ . '/../partials/header.view.php';
 include __DIR__ . '/nav.view.php';
 ?>
 <link rel="stylesheet" href="/CSS/customer-home.css">
+<link rel="stylesheet" href="/CSS/cart.css">
 <main class="customer-home">
     <section class="customer-hero">
 
@@ -67,21 +68,34 @@ include __DIR__ . '/nav.view.php';
         <?php if ($featuredProduct !== null): ?>
             <article
                 class="featured-product"
-                data-product-id="<?= htmlspecialchars((string) $featuredProduct['id']) ?>">
+                data-product-id="<?= htmlspecialchars((string) $featuredProduct['id']) ?>"
+                data-product-name="<?= htmlspecialchars($featuredProduct['name']) ?>"
+                data-product-price="<?= htmlspecialchars((string) $featuredProduct['price']) ?>"
+                data-product-image="/image_uploads/<?= htmlspecialchars($featuredProduct['image']) ?>"
+                data-restaurant-id="<?= htmlspecialchars((string) $featuredProduct['restaurant_id']) ?>"
+                data-delivery-fee="<?= htmlspecialchars((string) $featuredProduct['delivery_fee']) ?>"
+                data-delivery-time="<?= htmlspecialchars((string) $featuredProduct['delivery_time']) ?>">
+
                 <div class="featured-product-content">
                     <span class="featured-product-label">Today's special</span>
+
                     <h3><?= htmlspecialchars($featuredProduct['name']) ?></h3>
+
                     <p class="featured-product-description">
-                        <?= htmlspecialchars($featuredProduct['category']) ?> from <?= htmlspecialchars($featuredProduct['restaurant']) ?>
+                        <?= htmlspecialchars($featuredProduct['category']) ?>
+                        from
+                        <?= htmlspecialchars($featuredProduct['restaurant']) ?>
                     </p>
+
                     <div class="featured-product-footer">
                         <strong class="featured-product-price">
                             <?= htmlspecialchars((string) $featuredProduct['price']) ?> EGP
                         </strong>
+
                         <button
                             type="button"
                             class="featured-product-action"
-                            onclick="window.location.href='/product?id=<?= htmlspecialchars((string) $featuredProduct['id']) ?>'">
+                            id="featuredProductOrder">
                             Order now
                         </button>
                     </div>
@@ -225,6 +239,7 @@ include __DIR__ . '/nav.view.php';
 
 <script src="/js/location.js"></script>
 <script src="/js/search.js"></script>
+<script src="/js/cart.js"></script>
 
 <?php
 include __DIR__ . '/../partials/footer.view.php';
