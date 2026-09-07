@@ -7,6 +7,118 @@ use Core\Database;
 
 class Restaurant
 {
+    public static function findById(int $id): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $restaurant = $db->query(
+            "SELECT
+            r.id,
+            r.name,
+            r.logo,
+            r.banner,
+            r.cuisine,
+            r.delivery_time,
+            r.delivery_fee,
+            r.min_order,
+            r.is_open,
+            r.description,
+            r.address_text AS address,
+            u.phone,
+
+            ROUND(COALESCE(AVG(rt.rating), 0), 1) AS rating,
+            COUNT(rt.id) AS review_count,
+
+            CASE
+                WHEN cu.latitude IS NOT NULL
+                 AND cu.longitude IS NOT NULL
+                 AND r.latitude IS NOT NULL
+                 AND r.longitude IS NOT NULL
+                THEN ROUND(
+                    ST_Distance_Sphere(
+                        POINT(cu.longitude, cu.latitude),
+                        POINT(r.longitude, r.latitude)
+                    ) / 1000,
+                    1
+                )
+                ELSE NULL
+            END AS distance
+
+        FROM restaurants r
+
+        INNER JOIN users u
+            ON u.id = r.owner_id
+
+        LEFT JOIN ratings rt
+            ON rt.restaurant_id = r.id
+
+        LEFT JOIN users cu
+            ON cu.id = :customer_id
+
+        WHERE r.id = :restaurant_id
+          AND r.is_enabled = TRUE
+
+        GROUP BY r.id",
+            [
+                'customer_id' => $_SESSION['user']['id'],
+                'restaurant_id' => $id
+            ]
+        )->find();
+
+        return $restaurant ?: null;
+    }
+
+    public static function getProducts(int $restaurantId): array
+    {
+        $db = App::resolve(Database::class);
+
+        return $db->query(
+            "SELECT
+            id,
+            name,
+            description,
+            price,
+            image,
+            category,
+            is_available
+
+        FROM products
+
+        WHERE restaurant_id = :restaurant_id
+
+        ORDER BY category, id",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->get();
+    }
+
+    public static function getReviews(int $restaurantId): array
+    {
+        $db = App::resolve(Database::class);
+
+        return $db->query(
+            "SELECT
+            rt.id,
+            u.name AS customer_name,
+            rt.rating,
+            rt.comment,
+            rt.created_at
+
+        FROM ratings rt
+
+        INNER JOIN users u
+            ON u.id = rt.customer_id
+
+        WHERE rt.restaurant_id = :restaurant_id
+
+        ORDER BY rt.created_at DESC",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->get();
+    }
+
     public static function getNearRestaurants(
         float $latitude,
         float $longitude
@@ -291,5 +403,105 @@ class Restaurant
                 'id' => $id
             ]
         );
+    }
+
+    public static function createReview(
+        int $customerId,
+        int $restaurantId,
+        int $rating,
+        string $comment
+    ): array {
+        $db = App::resolve(Database::class);
+
+        $existingReview = $db->query(
+            "SELECT id
+         FROM ratings
+         WHERE customer_id = :customer_id
+           AND restaurant_id = :restaurant_id",
+            [
+                'customer_id' => $customerId,
+                'restaurant_id' => $restaurantId
+            ]
+        )->find();
+
+        if ($existingReview) {
+
+            // User already reviewed → update old review
+            $db->query(
+                "UPDATE ratings
+             SET rating = :rating,
+                 comment = :comment,
+                 created_at = CURRENT_TIMESTAMP
+             WHERE id = :id",
+                [
+                    'rating' => $rating,
+                    'comment' => $comment,
+                    'id' => $existingReview['id']
+                ]
+            );
+
+            $reviewId = $existingReview['id'];
+        } else {
+
+            // First review → create new review
+            $db->query(
+                "INSERT INTO ratings (
+                customer_id,
+                restaurant_id,
+                rating,
+                comment
+            ) VALUES (
+                :customer_id,
+                :restaurant_id,
+                :rating,
+                :comment
+            )",
+                [
+                    'customer_id' => $customerId,
+                    'restaurant_id' => $restaurantId,
+                    'rating' => $rating,
+                    'comment' => $comment
+                ]
+            );
+
+            $reviewId = $db->query(
+                "SELECT LAST_INSERT_ID() AS id"
+            )->find()['id'];
+        }
+
+        // Get the review after INSERT/UPDATE
+        $review = $db->query(
+            "SELECT
+            rt.id,
+            u.name AS customer_name,
+            rt.rating,
+            rt.comment,
+            rt.created_at
+         FROM ratings rt
+         INNER JOIN users u
+             ON u.id = rt.customer_id
+         WHERE rt.id = :id",
+            [
+                'id' => $reviewId
+            ]
+        )->find();
+
+        // Get updated restaurant statistics
+        $stats = $db->query(
+            "SELECT
+            ROUND(AVG(rating), 1) AS rating,
+            COUNT(*) AS review_count
+         FROM ratings
+         WHERE restaurant_id = :restaurant_id",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->find();
+
+        return [
+            'review' => $review,
+            'rating' => $stats['rating'],
+            'review_count' => $stats['review_count']
+        ];
     }
 }
