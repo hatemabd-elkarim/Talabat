@@ -27,6 +27,7 @@ $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
 $router->post('/customer/location', [ProfileController::class, 'updateLocation']);
 $router->post('/customer/restaurant-details/review',[RestaurantController::class, 'storeReview']);
+$router->post('/customer/coupon/apply', [CouponController::class, 'apply']);
 
 // Checkout / Payment routes
 $router->get('/customer/checkout', [OrderController::class, 'showCheckout']);

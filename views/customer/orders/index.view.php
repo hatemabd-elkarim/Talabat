@@ -132,7 +132,7 @@ $filteredOrders = array_filter($orders, function ($o) use ($activeTab) {
             <div class="price"><?= number_format($order['total_price'], 2) ?> EGP</div>
             <div class="date"><?= htmlspecialchars(date('M j, Y', strtotime($order['created_at']))) ?></div>
           </div>
-          <a href="#" class="view-details">View details ›</a>
+          <!-- <a href="#" class="view-details">View details ›</a> -->
         </div>
         <?php if (!empty($order['rating'])): ?>
           <div class="review">
