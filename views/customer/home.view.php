@@ -109,38 +109,50 @@ include __DIR__ . '/nav.view.php';
             <?php if ($nearRestaurants): ?>
                 <?php foreach ($nearRestaurants as $restaurant): ?>
                     <article class="restaurant-card"
-                        data-search="<?= htmlspecialchars(
-                                            strtolower($restaurant['name'] . ' ' . $restaurant['cuisine'])
-                                        ) ?>"
+                        data-search="<?= htmlspecialchars(strtolower($restaurant['name'] . ' ' . $restaurant['cuisine'])) ?>"
                         onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
+
                         <div class="restaurant-card-image">
+
                             <img
                                 src="/image_uploads/<?= htmlspecialchars($restaurant['image']) ?>"
                                 alt="<?= htmlspecialchars($restaurant['name']) ?>"
                                 loading="lazy">
 
+                            <div class="restaurant-card-overlay">
+                                <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
+                                <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+                            </div>
+
                             <span class="restaurant-rating">
                                 <?php include '../public/assets/icons/star.php' ?>
                                 <?= htmlspecialchars((string) $restaurant['rating']) ?>
                             </span>
+
                         </div>
 
                         <div class="restaurant-card-content">
-                            <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
-                            <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+
                             <div class="restaurant-card-meta">
 
                                 <span>
                                     <?php include '../public/assets/icons/time.php' ?>
                                     <?= htmlspecialchars($restaurant['delivery_time']) ?> min
                                 </span>
+
                                 <span>
                                     <?php include '../public/assets/icons/map-pin.php' ?>
                                     <?= htmlspecialchars($restaurant['distance']) ?> KM
                                 </span>
-                                <span><?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP delivery</span>
+
+                                <span>
+                                    <?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP
+                                </span>
+
                             </div>
+
                         </div>
+
                     </article>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -157,29 +169,50 @@ include __DIR__ . '/nav.view.php';
             <?php if ($topRatedRestaurants): ?>
                 <?php foreach ($topRatedRestaurants as $restaurant): ?>
                     <article class="restaurant-card"
+                        data-search="<?= htmlspecialchars(strtolower($restaurant['name'] . ' ' . $restaurant['cuisine'])) ?>"
                         onclick="window.location.href='/customer/restaurant-details?id=<?= htmlspecialchars((string) $restaurant['id']) ?>'">
+
                         <div class="restaurant-card-image">
+
                             <img
                                 src="/image_uploads/<?= htmlspecialchars($restaurant['image']) ?>"
                                 alt="<?= htmlspecialchars($restaurant['name']) ?>"
                                 loading="lazy">
+
+                            <div class="restaurant-card-overlay">
+                                <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
+                                <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+                            </div>
+
                             <span class="restaurant-rating">
                                 <?php include '../public/assets/icons/star.php' ?>
                                 <?= htmlspecialchars((string) $restaurant['rating']) ?>
                             </span>
+
                         </div>
 
                         <div class="restaurant-card-content">
-                            <h3><?= htmlspecialchars($restaurant['name']) ?></h3>
-                            <p><?= htmlspecialchars($restaurant['cuisine']) ?></p>
+
                             <div class="restaurant-card-meta">
+
                                 <span>
                                     <?php include '../public/assets/icons/time.php' ?>
                                     <?= htmlspecialchars($restaurant['delivery_time']) ?> min
                                 </span>
-                                <span><?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP delivery</span>
+
+                                <span>
+                                    <?php include '../public/assets/icons/map-pin.php' ?>
+                                    <?= htmlspecialchars($restaurant['distance']) ?> KM
+                                </span>
+
+                                <span>
+                                    <?= htmlspecialchars((string) $restaurant['delivery_fee']) ?> EGP
+                                </span>
+
                             </div>
+
                         </div>
+
                     </article>
                 <?php endforeach; ?>
             <?php else: ?>
