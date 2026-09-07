@@ -25,6 +25,7 @@ $router->get('/customer/notifications', [NotificationController::class, 'showCus
 $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders']);
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
+$router->post('/customer/location', [ProfileController::class, 'updateLocation']);
 
 // Checkout / Payment routes
 $router->get('/customer/checkout', [OrderController::class, 'showCheckout']);

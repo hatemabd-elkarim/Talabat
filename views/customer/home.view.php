@@ -13,7 +13,7 @@ include __DIR__ . '/nav.view.php';
             <span class="delivery-location-label">Deliver to</span>
 
             <span class="delivery-location-address">
-                <?= htmlspecialchars($user['address_text'] ?? 'Set your location') ?>
+                <?= htmlspecialchars($currentUser['address_text'] ?? 'Set your location') ?>
             </span>
         </div>
         <div class="restaurant-status">
@@ -180,6 +180,8 @@ include __DIR__ . '/nav.view.php';
     </section>
 
 </main>
+
+<script src="/js/location.js"></script>
 
 <?php
 include __DIR__ . '/../partials/footer.view.php';
