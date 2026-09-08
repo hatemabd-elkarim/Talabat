@@ -32,10 +32,17 @@ $router->get('/customer/notifications',[NotificationController::class, 'showCust
 $router->post('/customer/notifications/read', [NotificationController::class, 'markNotificationRead']);
 $router->post('/customer/notifications/read-all', [NotificationController::class, 'markAllNotificationsRead']);
 $router->post('/customer/profile/update', [ProfileController::class, 'update']);
-
-// Checkout / Payment routes
 $router->get('/customer/checkout', [OrderController::class, 'showCheckout']);
 $router->post('/customer/checkout', [OrderController::class, 'placeOrder']);
+
+// Restaurant routes
+$router->get('/restaurant/dashboard', [RestaurantController::class, 'dashboard']);
+$router->get('/restaurant/products', [RestaurantController::class, 'products']);
+$router->get('/restaurant/categories', [RestaurantController::class, 'categories']);
+$router->get('/restaurant/orders', [RestaurantController::class, 'orders']);
+$router->get('/restaurant/profile', [RestaurantController::class, 'profile']);
+
+
 // admin routes
 $router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
 $router->get('/admin/restaurants', [RestaurantController::class, 'adminRestaurants']);

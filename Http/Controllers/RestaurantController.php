@@ -4,9 +4,43 @@ namespace Http\Controllers;
 
 use Models\Restaurant;
 use Http\Forms\RestaurantForm;
+use Core\MockData\RestaurantMockData;
 
 class RestaurantController
 {
+    public function dashboard()
+    {
+        $restaurant = RestaurantMockData::restaurant();
+        $stats = RestaurantMockData::stats();
+        $orders = RestaurantMockData::orders();
+
+        view('restaurant/dashboard.view.php', [
+            'restaurant' => $restaurant,
+            'stats' => $stats,
+            'orders' => $orders
+        ]);
+    }
+
+    public function products()
+    {
+        view('restaurant/products.view.php');
+    }
+
+    public function categories()
+    {
+        view('restaurant/categories.view.php');
+    }
+
+    public function orders()
+    {
+        view('restaurant/orders.view.php');
+    }
+
+    public function profile()
+    {
+        view('restaurant/profile.view.php');
+    }
+
     public function showRestaurantDetails()
     {
         $restaurantId = (int) ($_GET['id'] ?? 0);
