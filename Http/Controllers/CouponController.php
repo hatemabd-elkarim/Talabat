@@ -200,4 +200,57 @@ class CouponController
             'success' => true
         ]);
     }
+
+    public function apply()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $code = strtoupper(trim($data['code'] ?? ''));
+        $subtotal = (float) ($data['subtotal'] ?? 0);
+
+        if ($code === '') {
+            header('Content-Type: application/json');
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Please enter a coupon code.'
+            ]);
+
+            exit;
+        }
+
+        $coupon = Coupon::findValidCoupon($code, $subtotal);
+
+        header('Content-Type: application/json');
+
+        if (!$coupon) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Invalid or expired coupon.'
+            ]);
+
+            exit;
+        }
+
+        $discount = ($subtotal * $coupon['discount_percent']) / 100;
+
+        if ($coupon['max_discount'] !== null) {
+            $discount = min(
+                $discount,
+                (float) $coupon['max_discount']
+            );
+        }
+
+        echo json_encode([
+            'success' => true,
+            'coupon' => [
+                'id' => $coupon['id'],
+                'code' => $coupon['code'],
+                'discount_percent' => (float) $coupon['discount_percent']
+            ],
+            'discount' => round($discount, 2)
+        ]);
+
+        exit;
+    }
 }

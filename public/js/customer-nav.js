@@ -37,3 +37,20 @@ function navigate(page) {
     window.location.href = routes[page];
   }
 }
+
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const badges = document.querySelectorAll(".cart-badge");
+
+  const cartItemCount = cart.reduce(function (sum, item) {
+    return sum + item.qty;
+  }, 0);
+
+  badges.forEach(function (badge) {
+    badge.textContent = cartItemCount;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateCartBadge();
+});

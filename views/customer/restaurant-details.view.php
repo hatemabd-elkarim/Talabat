@@ -9,7 +9,7 @@ include __DIR__ . '/nav.view.php';
 
     <section
         class="restaurant-hero"
-        style="background-image: url('<?= htmlspecialchars($restaurant['cover_image']) ?>')">
+        style="background-image: url('/image_uploads/<?= htmlspecialchars($restaurant['banner']) ?>')">
 
         <div class="hero-overlay"></div>
 
@@ -145,14 +145,12 @@ include __DIR__ . '/nav.view.php';
     <div class="restaurant-content">
 
 
-        <!-- MENU -->
 
         <section class="tab-content active" id="menu">
 
             <div class="menu-layout">
 
 
-                <!-- Categories -->
 
                 <aside class="categories">
 
@@ -160,9 +158,9 @@ include __DIR__ . '/nav.view.php';
 
                         <button
                             class="category <?= $index === 0 ? 'active' : '' ?>"
-                            data-category="<?= $category['id'] ?>">
+                            data-category="<?= htmlspecialchars($category) ?>">
 
-                            <?= htmlspecialchars($category['name']) ?>
+                            <?= htmlspecialchars($category) ?>
 
                         </button>
 
@@ -171,7 +169,6 @@ include __DIR__ . '/nav.view.php';
                 </aside>
 
 
-                <!-- Products -->
 
                 <div class="products">
 
@@ -179,7 +176,7 @@ include __DIR__ . '/nav.view.php';
 
                         <article
                             class="product-card <?= !$product['is_available'] ? 'unavailable-card' : '' ?>"
-                            data-category="<?= $product['category_id'] ?>">
+                            data-category="<?= htmlspecialchars($product['category']) ?>">
 
                             <?php if (!$product['is_available']): ?>
 
@@ -190,7 +187,7 @@ include __DIR__ . '/nav.view.php';
                             <?php endif; ?>
 
                             <img
-                                src="<?= htmlspecialchars($product['image']) ?>"
+                                src="/image_uploads/<?= htmlspecialchars($product['image']) ?>"
                                 alt="<?= htmlspecialchars($product['name']) ?>"
                                 class="product-image">
 
@@ -220,7 +217,14 @@ include __DIR__ . '/nav.view.php';
 
                                         <button
                                             class="add-product"
-                                            data-product-id="<?= $product['id'] ?>">
+                                            data-product-id="<?= $product['id'] ?>"
+                                            data-product-name="<?= htmlspecialchars($product['name']) ?>"
+                                            data-product-price="<?= $product['price'] ?>"
+                                            data-product-image="/image_uploads/<?= htmlspecialchars($product['image']) ?>"
+                                            data-restaurant-id="<?= $restaurant['id'] ?>"
+                                            data-delivery-fee=" <?= $restaurant['delivery_fee'] ?>"
+                                            data-delivery-time="<?= $restaurant['delivery_time'] ?>"
+                                            >
                                             +
                                         </button>
 
@@ -241,7 +245,6 @@ include __DIR__ . '/nav.view.php';
         </section>
 
 
-        <!-- INFO -->
 
         <section class="tab-content" id="info">
 
@@ -358,7 +361,6 @@ include __DIR__ . '/nav.view.php';
         </section>
 
 
-        <!-- REVIEWS -->
 
         <section class="tab-content" id="reviews">
 
@@ -407,7 +409,9 @@ include __DIR__ . '/nav.view.php';
 
                     <?php foreach ($reviews as $review): ?>
 
-                        <article class="review-card">
+                        <article
+                            class="review-card"
+                            data-review-id="<?= htmlspecialchars((string) $review['id']) ?>">
 
                             <div class="review-header">
 
@@ -462,7 +466,7 @@ include __DIR__ . '/nav.view.php';
     </div>
 
 
-    <!-- WRITE REVIEW MODAL -->
+
 
     <div class="modal-overlay" id="reviewModal">
 

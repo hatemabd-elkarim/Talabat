@@ -25,6 +25,15 @@ $router->get('/customer/notifications', [NotificationController::class, 'showCus
 $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders']);
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
+$router->post('/customer/location', [ProfileController::class, 'updateLocation']);
+$router->post('/customer/restaurant-details/review',[RestaurantController::class, 'storeReview']);
+$router->post('/customer/coupon/apply', [CouponController::class, 'apply']);
+$router->get('/customer/notifications',[NotificationController::class, 'showCustomerNotifications']);
+$router->post('/customer/notifications/read', [NotificationController::class, 'markNotificationRead']);
+$router->post('/customer/notifications/read-all', [NotificationController::class, 'markAllNotificationsRead']);
+$router->post('/customer/profile/update', [ProfileController::class, 'update']);
+$router->get('/customer/checkout', [OrderController::class, 'showCheckout']);
+$router->post('/customer/checkout', [OrderController::class, 'placeOrder']);
 
 // Restaurant routes
 $router->get('/restaurant/dashboard', [RestaurantController::class, 'dashboard']);
@@ -32,6 +41,7 @@ $router->get('/restaurant/products', [RestaurantController::class, 'products']);
 $router->get('/restaurant/categories', [RestaurantController::class, 'categories']);
 $router->get('/restaurant/orders', [RestaurantController::class, 'orders']);
 $router->get('/restaurant/profile', [RestaurantController::class, 'profile']);
+
 
 // admin routes
 $router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
