@@ -8,7 +8,13 @@
         </div>
         <h2><?= $restaurant['name'] ?></h2>
         <p>Dashboard overview</p>
-        <strong><?= $restaurant['status'] ?></strong>
+        <strong>
+            <?php if ($restaurant['is_open']): ?>
+                <?= 'open' ?>
+            <? else: ?>
+                <?= 'closed' ?>
+            <?php endif ?>
+        </strong>
     </section>
 
     <section class="dashboard-stats">
@@ -55,12 +61,12 @@
     <section class="recent-orders">
 
         <div class="recent-orders-header">
-            <h4>Recent Orders</h4>
+            <h4>Pending Orders</h4>
             <a href="#">View all</a>
         </div>
 
         <div class="orders-list">
-            <?php foreach (array_slice($orders, 0, 3) as $order): ?>
+            <?php foreach (array_slice($pendingOrders, 0, 3) as $order): ?>
                 <div class="order-row">
                     <div class="order-info">
                         <strong>
@@ -69,7 +75,7 @@
                         <span>
                             #ORD-<?= htmlspecialchars($order['id']) ?>
                             <b>•</b>
-                            <?= htmlspecialchars(implode(', ', $order['items'])) ?>
+                            <?= htmlspecialchars($order['items']) ?>
                         </span>
                     </div>
                     <div class="order-status">
@@ -78,7 +84,7 @@
                             <?= ucfirst(htmlspecialchars($order['status'])) ?>
                         </span>
                         <strong>
-                            <?= number_format($order['total'], 2) ?> EGP
+                            <?= number_format($order['total_price'], 2) ?> EGP
                         </strong>
                     </div>
                 </div>
@@ -87,4 +93,11 @@
     </section>
 
 </main>
+<script>
+    const today = new Date().toLocaleDateString();
+    const elements = document.querySelectorAll('.stat-card:nth-child(-n+2)');
+    elements.forEach((element) => {
+        element.style.setProperty('--today-date', `"${today}"`);
+    });
+</script>
 <?php include __DIR__ . '/../partials/footer.view.php'; ?>

@@ -322,8 +322,8 @@
   background-color: #f5f5f5;
 }
 
-.profile-dropdown .sign-out {
-  color: #e53935;
+.profile-dropdown .-out {
+  color: #e53935;sign
 }
 
 .profile-dropdown .sign-out:hover {

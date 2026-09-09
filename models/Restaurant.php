@@ -7,6 +7,48 @@ use Core\Database;
 
 class Restaurant
 {
+    public static function findByOwnerId(int $ownerId): ?array
+    {
+        $db = App::resolve(Database::class);
+
+        $restaurant = $db->query(
+            "SELECT
+            r.id,
+            r.name,
+            r.logo,
+            r.banner,
+            r.cuisine,
+            r.delivery_time,
+            r.delivery_fee,
+            r.min_order,
+            r.is_open,
+            r.description,
+            r.address_text AS address,
+            u.phone,
+
+            ROUND(COALESCE(AVG(rt.rating), 0), 1) AS rating,
+            COUNT(rt.id) AS review_count
+
+        FROM restaurants r
+
+        INNER JOIN users u
+            ON u.id = r.owner_id
+
+        LEFT JOIN ratings rt
+            ON rt.restaurant_id = r.id
+
+        WHERE r.owner_id = :owner_id
+          AND r.is_enabled = TRUE
+
+        GROUP BY r.id",
+            [
+                'owner_id' => $ownerId
+            ]
+        )->find();
+
+        return $restaurant ?: null;
+    }
+
     public static function findById(int $id): ?array
     {
         $db = App::resolve(Database::class);
@@ -506,5 +548,122 @@ class Restaurant
             'rating' => $stats['rating'],
             'review_count' => $stats['review_count']
         ];
+    }
+
+    public static function getDashboardStats(int $restaurantId): array
+    {
+        $db = App::resolve(Database::class);
+
+        $stats = $db->query(
+            "SELECT
+            COALESCE(SUM(
+                CASE
+                    WHEN DATE(created_at) = CURDATE()
+                    AND status != 'cancelled'
+                    THEN total_price
+                    ELSE 0
+                END
+            ), 0) AS today_sales,
+
+            COUNT(
+                CASE
+                    WHEN DATE(created_at) = CURDATE()
+                    THEN 1
+                END
+            ) AS today_orders,
+
+            COUNT(
+                CASE
+                    WHEN status IN ('pending')
+                    THEN 1
+                END
+            ) AS pending_orders
+
+        FROM orders
+
+        WHERE restaurant_id = :restaurant_id",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->find();
+
+        $productStats = $db->query(
+            "SELECT
+            COUNT(*) AS total_products,
+            COUNT(CASE WHEN is_available = TRUE THEN 1 END) AS available_products,
+            COUNT(DISTINCT category) AS total_categories
+         FROM products
+         WHERE restaurant_id = :restaurant_id",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->find();
+
+        $ratingStats = $db->query(
+            "SELECT
+            COALESCE(ROUND(AVG(rating), 1), 0) AS average_rating
+         FROM ratings
+         WHERE restaurant_id = :restaurant_id",
+            [
+                'restaurant_id' => $restaurantId
+            ]
+        )->find();
+
+        return [
+            'today_sales' => (float) $stats['today_sales'],
+            'today_orders' => (int) $stats['today_orders'],
+            'pending_orders' => (int) $stats['pending_orders'],
+
+            'total_products' => (int) $productStats['total_products'],
+            'total_categories' => (int) $productStats['total_categories'],
+            'available_products' => (int) $productStats['available_products'],
+
+            'average_rating' => (float) $ratingStats['average_rating'],
+        ];
+    }
+
+    public static function updateProfile(int $id, array $data): bool
+    {
+        $db = App::resolve(Database::class);
+
+        $db->query(
+            "UPDATE restaurants
+         SET
+            name = :name,
+            description = :description,
+            address_text = :address_text,
+            delivery_time = :delivery_time,
+            delivery_fee = :delivery_fee,
+            min_order = :min_order
+         WHERE id = :id",
+            [
+                'id'            => $id,
+                'name'          => $data['name'],
+                'description'   => $data['description'],
+                'address_text'  => $data['address_text'],
+                'delivery_time' => $data['delivery_time'],
+                'delivery_fee'  => $data['delivery_fee'],
+                'min_order'     => $data['min_order'],
+            ]
+        );
+
+        return true;
+    }
+
+    public static function updateStatus(int $id, int $isOpen): bool
+    {
+        $db = App::resolve(Database::class);
+
+        $db->query(
+            "UPDATE restaurants
+         SET is_open = :is_open
+         WHERE id = :id",
+            [
+                'id'      => $id,
+                'is_open' => $isOpen,
+            ]
+        );
+
+        return true;
     }
 }

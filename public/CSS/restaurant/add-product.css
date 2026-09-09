@@ -1,4 +1,4 @@
-.add-product-modal {
+.product-modal {
     position: fixed;
     z-index: 1000;
     inset: 0;
@@ -11,11 +11,11 @@
     overflow-y: auto;
 }
 
-.add-product-modal.is-open {
+.product-modal.is-open {
     display: flex;
 }
 
-.add-product-dialog {
+.product-modal-dialog {
     width: min(100%, 600px);
     max-height: calc(100vh - 48px);
     overflow-y: auto;
@@ -24,10 +24,10 @@
     border-radius: 16px;
     background: var(--color-surface);
     box-shadow: 0 18px 50px color-mix(in srgb, var(--color-secondary) 25%, transparent);
-    animation: add-product-modal-enter 0.25s ease both;
+    animation: product-modal-enter 0.25s ease both;
 }
 
-.add-product-header {
+.product-modal-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -35,7 +35,7 @@
     margin-bottom: 26px;
 }
 
-.add-product-eyebrow {
+.product-modal-eyebrow {
     margin-bottom: 6px;
     color: var(--color-primary);
     font-size: 11px;
@@ -44,7 +44,7 @@
     text-transform: uppercase;
 }
 
-.add-product-header h2 {
+.product-modal-header h2 {
     color: var(--color-secondary);
     font-size: 26px;
     line-height: 1.2;
@@ -73,7 +73,7 @@
     color: var(--color-secondary);
 }
 
-.add-product-form {
+.product-modal-form {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -177,7 +177,7 @@
     color: var(--color-muted-fg);
 }
 
-.add-product-modal .switch {
+.product-modal .switch {
     position: relative;
     display: inline-block;
     flex: 0 0 auto;
@@ -185,13 +185,13 @@
     height: 22px;
 }
 
-.add-product-modal .switch input {
+.product-modal .switch input {
     width: 0;
     height: 0;
     opacity: 0;
 }
 
-.add-product-modal .slider {
+.product-modal .slider {
     position: absolute;
     inset: 0;
     border-radius: 20px;
@@ -200,7 +200,7 @@
     transition: background-color 0.2s ease;
 }
 
-.add-product-modal .slider::before {
+.product-modal .slider::before {
     position: absolute;
     bottom: 3px;
     left: 3px;
@@ -213,15 +213,15 @@
     transition: transform 0.2s ease;
 }
 
-.add-product-modal .switch input:checked+.slider {
+.product-modal .switch input:checked+.slider {
     background: var(--color-primary);
 }
 
-.add-product-modal .switch input:checked+.slider::before {
+.product-modal .switch input:checked+.slider::before {
     transform: translateX(18px);
 }
 
-.add-product-modal .switch input:focus-visible+.slider,
+.product-modal .switch input:focus-visible+.slider,
 .close-product-modal:focus-visible,
 .form-button:focus-visible {
     outline: 2px solid var(--color-primary-light);
@@ -298,7 +298,68 @@
     transform: translateY(-2px);
 }
 
-@keyframes add-product-modal-enter {
+.image-upload {
+    display: block;
+    width: 100%;
+    border: 2px dashed #d8d1ca;
+    border-radius: 12px;
+    padding: 25px 20px;
+    background: #faf8f5;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.image-upload:hover {
+    border-color: #c8a27a;
+    background: #f7f2ec;
+}
+
+.image-upload input[type="file"] {
+    display: none;
+}
+
+.image-upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.image-upload-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #eee8e1;
+    color: #6f675f;
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.image-upload-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a4642;
+}
+
+.image-upload-hint {
+    font-size: 12px;
+    color: #8a8580;
+}
+
+.product-image-preview {
+    display: none;
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+@keyframes product-modal-enter {
     from {
         opacity: 0;
         transform: translateY(10px) scale(0.98);
@@ -311,17 +372,17 @@
 }
 
 @media (max-width: 600px) {
-    .add-product-modal {
+    .product-modal {
         align-items: flex-start;
         padding: 16px;
     }
 
-    .add-product-dialog {
+    .product-modal-dialog {
         max-height: calc(100vh - 32px);
         padding: 22px 18px;
     }
 
-    .add-product-header h2 {
+    .product-modal-header h2 {
         font-size: 23px;
     }
 
@@ -336,7 +397,7 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .add-product-dialog,
+    .product-modal-dialog,
     .close-product-modal,
     .form-button {
         animation: none;

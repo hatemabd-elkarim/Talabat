@@ -186,3 +186,15 @@ footer {
         display: none;
     }
 }
+
+.sign-out {
+  color: #e53935;
+}
+
+.dropdown-divider {
+  height: 1px;
+
+  background-color: #e5e5e5;
+
+  margin: 6px 0;
+}
