@@ -95,9 +95,9 @@ $user_image   = "https://ui-avatars.com/api/?name=" . urlencode($user_name) . "&
 
         <div class="account">
             <h3>Account</h3>
-            <button class="sign-out-button" type="button" onclick="logout()">
-                <i class="fa-solid fa-right-from-bracket"></i> Sign out
-            </button>
+            <form action="/logout" method="POST">
+                <button type="submit" class="sign-out-button">Sign out</button>
+            </form>
         </div>
 
     </div>
