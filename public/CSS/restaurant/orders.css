@@ -248,6 +248,10 @@ section[aria-label="Restaurant orders"] {
     margin-top: 10px;
     padding-top: 12px;
     border-top: 1px solid #eeeae4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .order-actions:empty {

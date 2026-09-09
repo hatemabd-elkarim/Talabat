@@ -8,6 +8,7 @@ use Http\Controllers\NotificationController;
 use Http\Controllers\OrderController;
 use Http\Controllers\RestaurantController;
 use Http\Controllers\CouponController;
+use Http\Controllers\ProductController;
 
 // testing route
 $router->get('/', [IndexController::class, 'index']);
@@ -26,9 +27,9 @@ $router->get('/customer/orders', [OrderController::class, 'showCustomerOrders'])
 $router->get('/customer/cart', [OrderController::class, 'cart']);
 $router->get('/customer/restaurant-details', [RestaurantController::class, 'showRestaurantDetails']);
 $router->post('/customer/location', [ProfileController::class, 'updateLocation']);
-$router->post('/customer/restaurant-details/review',[RestaurantController::class, 'storeReview']);
+$router->post('/customer/restaurant-details/review', [RestaurantController::class, 'storeReview']);
 $router->post('/customer/coupon/apply', [CouponController::class, 'apply']);
-$router->get('/customer/notifications',[NotificationController::class, 'showCustomerNotifications']);
+$router->get('/customer/notifications', [NotificationController::class, 'showCustomerNotifications']);
 $router->post('/customer/notifications/read', [NotificationController::class, 'markNotificationRead']);
 $router->post('/customer/notifications/read-all', [NotificationController::class, 'markAllNotificationsRead']);
 $router->post('/customer/profile/update', [ProfileController::class, 'update']);
@@ -38,10 +39,15 @@ $router->post('/customer/checkout', [OrderController::class, 'placeOrder']);
 // Restaurant routes
 $router->get('/restaurant/dashboard', [RestaurantController::class, 'dashboard']);
 $router->get('/restaurant/products', [RestaurantController::class, 'products']);
-$router->get('/restaurant/categories', [RestaurantController::class, 'categories']);
 $router->get('/restaurant/orders', [RestaurantController::class, 'orders']);
 $router->get('/restaurant/profile', [RestaurantController::class, 'profile']);
-
+$router->post('/restaurant/profile/update', [RestaurantController::class, 'updateProfile']);
+$router->post('/restaurant/profile/status', [RestaurantController::class, 'updateStatus']);
+$router->post('/restaurant/orders/status', [OrderController::class, 'updateOrderStatus']);
+$router->post('/restaurant/products', [ProductController::class, 'addProduct']);
+$router->post('/restaurant/products/update', [ProductController::class, 'updateProduct']);
+$router->post('/restaurant/products/availability', [ProductController::class, 'updateProductAvailability']);
+$router->post('/restaurant/products/delete', [ProductController::class, 'deleteProduct']);
 
 // admin routes
 $router->get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);

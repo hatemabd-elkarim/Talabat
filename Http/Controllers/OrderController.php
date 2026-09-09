@@ -2,8 +2,12 @@
 
 namespace Http\Controllers;
 
+use Models\Order;
+use Models\Restaurant;
 use Core\App;
+use Core\Session;
 use Models\Coupon;
+
 
 class OrderController
 {
@@ -322,5 +326,28 @@ class OrderController
         ]);
 
         exit();
+    }
+
+    public function updateOrderStatus()
+    {
+        $userId = (int) Session::get('user')['id'];
+
+        $restaurant = Restaurant::findByOwnerId($userId);
+
+        $orderId = (int) ($_POST['order_id'] ?? 0);
+        $status = $_POST['status'] ?? '';
+
+        $updated = Order::updateOrderStatus(
+            $orderId,
+            $restaurant['id'],
+            $status
+        );
+
+        header('Content-Type: application/json');
+
+        echo json_encode([
+            'success' => $updated,
+            'status' => $status
+        ]);
     }
 }

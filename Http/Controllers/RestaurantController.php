@@ -3,45 +3,52 @@
 namespace Http\Controllers;
 
 use Models\Restaurant;
+use Models\Order;
+use Models\Product;
 use Http\Forms\RestaurantForm;
-use Core\MockData\RestaurantMockData;
+use Core\Session;
 
 class RestaurantController
 {
     public function dashboard()
     {
-        $restaurant = RestaurantMockData::restaurant();
-        $stats = RestaurantMockData::stats();
-        $orders = RestaurantMockData::orders();
+        $userId = (int) Session::get('user')['id'];
+
+        $restaurant = Restaurant::findByOwnerId($userId);
+        $stats = Restaurant::getDashboardStats($restaurant['id']);
+        $orders = Order::getRestuarantOrders($restaurant['id']);
+
+        $pendingOrders = array_filter(
+            $orders,
+            fn($order) => $order['status'] === 'pending'
+        );
 
         view('restaurant/dashboard.view.php', [
             'restaurant' => $restaurant,
             'stats' => $stats,
-            'orders' => $orders
+            'pendingOrders' => $pendingOrders
         ]);
     }
 
     public function products()
     {
-        $products = RestaurantMockData::products();
-        $stats = RestaurantMockData::stats();
-        $categories = RestaurantMockData::categories();
+        $userId = (int) Session::get('user')['id'];
+
+        $restaurant = Restaurant::findByOwnerId($userId);
+
+        $products = Product::getRestaurantProducts($restaurant['id']);
 
         view('restaurant/products.view.php', [
             'products' => $products,
-            'stats' => $stats,
-            'categories' => $categories
         ]);
-    }
-
-    public function categories()
-    {
-        view('restaurant/categories.view.php');
     }
 
     public function orders()
     {
-        $orders = RestaurantMockData::orders();
+        $userId = (int) Session::get('user')['id'];
+
+        $restaurant = Restaurant::findByOwnerId($userId);
+        $orders = Order::getRestuarantOrders($restaurant['id']);
 
         view('restaurant/orders.view.php', [
             'orders' => $orders
@@ -50,7 +57,85 @@ class RestaurantController
 
     public function profile()
     {
-        view('restaurant/profile.view.php');
+        $userId = (int) Session::get('user')['id'];
+        $restaurant = Restaurant::findByOwnerId($userId);
+
+        if (!$restaurant) {
+            http_response_code(404);
+            echo 'Restaurant not found.';
+            return;
+        }
+
+        view('restaurant/profile.view.php', ['restaurant' => $restaurant]);
+    }
+
+    public function updateProfile()
+    {
+        $userId = (int) Session::get('user')['id'];
+        $restaurant = Restaurant::findByOwnerId($userId);
+
+        if (!$restaurant) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Restaurant not found.']);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        $name = trim($input['name'] ?? '');
+        $description = trim($input['description'] ?? '');
+        $phone = trim($input['phone'] ?? '');
+        $address = trim($input['address'] ?? '');
+        $deliveryTime = $input['delivery_time'] ?? '';
+        $deliveryFee = $input['delivery_fee'] ?? '';
+        $minOrder = $input['min_order'] ?? '';
+
+        if ($name === '') {
+            http_response_code(422);
+            echo json_encode(['success' => false, 'field' => 'name', 'message' => 'Restaurant name is required.']);
+            return;
+        }
+
+        if ($phone === '') {
+            http_response_code(422);
+            echo json_encode(['success' => false, 'field' => 'phone', 'message' => 'Phone number is required.']);
+            return;
+        }
+
+        Restaurant::updateProfile($restaurant['id'], [
+            'name'          => $name,
+            'description'   => $description,
+            'address_text'  => $address,
+            'delivery_time' => (int) $deliveryTime,
+            'delivery_fee'  => (float) $deliveryFee,
+            'min_order'     => (int) $minOrder,
+        ]);
+
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => 'Profile updated successfully.']);
+    }
+
+    public function updateStatus()
+    {
+        $userId = (int) Session::get('user')['id'];
+        $restaurant = Restaurant::findByOwnerId($userId);
+
+        if (!$restaurant) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'message' => 'Restaurant not found.']);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $isOpen = (isset($input['is_open']) && (int) $input['is_open'] === 1) ? 1 : 0;
+
+        Restaurant::updateStatus($restaurant['id'], $isOpen);
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => true,
+            'message' => $isOpen ? 'Restaurant is now open.' : 'Restaurant is now closed.'
+        ]);
     }
 
     public function showRestaurantDetails()

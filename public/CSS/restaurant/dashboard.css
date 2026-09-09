@@ -296,21 +296,9 @@
     font-size: 10px;
 }
 
-.stat-card:nth-child(1)::after {
-    content: "↑ 12% vs last week";
-
-    display: block;
-
-    margin-top: 5px;
-
-    color: var(--color-success);
-
-    font-size: 10px;
-    font-weight: 600;
-}
-
+.stat-card:nth-child(1)::after,
 .stat-card:nth-child(2)::after {
-    content: "↑ 8% vs last week";
+    content: var(--today-date);
 
     display: block;
 

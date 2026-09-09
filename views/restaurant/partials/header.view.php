@@ -1,3 +1,11 @@
+<?php
+
+use Core\Session;
+use Models\Restaurant;
+
+$userId = (int) Session::get('user')['id'];
+$restaurant = Restaurant::findByOwnerId($userId);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,10 +40,6 @@
                     Products
                 </a>
 
-                <a href="/restaurant/categories" class="<?= ($_SERVER['REQUEST_URI'] ?? '') === '/restaurant/categories' ? 'active' : '' ?>">
-                    Categories
-                </a>
-
                 <a href="/restaurant/orders" class="<?= ($_SERVER['REQUEST_URI'] ?? '') === '/restaurant/orders' ? 'active' : '' ?>">
                     Orders
                 </a>
@@ -49,16 +53,24 @@
             <div class="right-actions">
                 <div class="profile-container">
                     <button class="profile-button" type="button" onclick="toggleProfile()" aria-label="Open restaurant profile menu">
-                        <span class="avatar">R</span>
-                        <span class="profile-name">Restaurant</span>
+                        <span class="avatar"><?= strtoupper(
+                                                    substr($restaurant['name'], 0, 1) .
+                                                        (isset(explode(' ', trim($restaurant['name']))[1])
+                                                            ? substr(explode(' ', trim($restaurant['name']))[1], 0, 1)
+                                                            : '')
+                                                ) ?></span>
+                        <span class="profile-name"><?= $restaurant['name'] ?></span>
                     </button>
 
                     <div class="profile-dropdown" id="profileDropdown">
                         <a href="/restaurant/dashboard">Dashboard</a>
                         <a href="/restaurant/products">Products</a>
-                        <a href="/restaurant/categories">Categories</a>
                         <a href="/restaurant/orders">Orders</a>
                         <a href="/restaurant/profile">Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <form action="/logout" method="POST">
+                            <button type="submit" class="sign-out">Sign out</button>
+                        </form>
                     </div>
 
                 </div>
@@ -74,9 +86,12 @@
         <div class="mobile-menu" id="mobileMenu">
             <a href="/restaurant/dashboard">Dashboard</a>
             <a href="/restaurant/products">Products</a>
-            <a href="/restaurant/categories">Categories</a>
             <a href="/restaurant/orders">Orders</a>
             <a href="/restaurant/profile">Profile</a>
+            <div class="dropdown-divider"></div>
+            <form action="/logout" method="POST">
+                <button type="submit" class="sign-out">Sign out</button>
+            </form>
         </div>
 
     </nav>

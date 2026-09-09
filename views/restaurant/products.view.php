@@ -7,13 +7,6 @@
         <div class="products-heading">
             <h2>Products</h2>
 
-            <p>
-                <?= $stats['total_products']; ?>
-                items across
-                <?= $stats['total_categories']; ?>
-                categoriess
-            </p>
-
             <button class="add-product-button" type="button" id="openAddProductModal">
                 <?php include __DIR__ . '/../../public/assets/icons/plus.php'; ?>
                 <span>Add product</span>
@@ -26,7 +19,7 @@
                 type="search"
                 name="search"
                 id="search"
-                placeholder="Search products...">
+                placeholder="Search products and categories...">
         </div>
 
     </section>
@@ -40,7 +33,7 @@
 
                 <div class="product-card-media">
                     <img
-                        src="<?= htmlspecialchars($product['image']); ?>"
+                        src="/image_uploads/<?= htmlspecialchars($product['image']); ?>"
                         alt="<?= htmlspecialchars($product['name']); ?>"
                         class="product-image">
                 </div>
@@ -62,7 +55,7 @@
                     </div>
 
                     <span class="product-category">
-                        <?= htmlspecialchars($product['category_name']); ?>
+                        <?= htmlspecialchars($product['category']); ?>
                     </span>
 
 
@@ -91,11 +84,25 @@
                         </div>
 
                         <div class="product-actions">
-                            <a href="#" aria-label="Edit <?= htmlspecialchars($product['name']); ?>">
+                            <a
+                                href="#"
+                                class="edit-product-button"
+                                data-product-id="<?= $product['id']; ?>"
+                                data-product-name="<?= htmlspecialchars($product['name']); ?>"
+                                data-product-description="<?= htmlspecialchars($product['description'] ?? ''); ?>"
+                                data-product-price="<?= htmlspecialchars($product['price']); ?>"
+                                data-product-category="<?= htmlspecialchars($product['category'] ?? ''); ?>"
+                                data-product-available="<?= $product['is_available']; ?>"
+                                data-product-image="/image_uploads/<?= htmlspecialchars($product['image'] ?? ''); ?>"
+                                aria-label="Edit <?= htmlspecialchars($product['name']); ?>">
                                 <?php include __DIR__ . '/../../public/assets/icons/edit.php'; ?>
                             </a>
 
-                            <a href="#" aria-label="Delete <?= htmlspecialchars($product['name']); ?>">
+                            <a
+                                href="#"
+                                class="delete-product-button"
+                                data-product-id="<?= $product['id']; ?>"
+                                aria-label="Delete <?= htmlspecialchars($product['name']); ?>">
                                 <?php include __DIR__ . '/../../public/assets/icons/trash.php'; ?>
                             </a>
                         </div>
@@ -112,79 +119,67 @@
 
 </section>
 
-<div class="add-product-modal" id="addProductModal" aria-hidden="true">
-    <div class="add-product-dialog" role="dialog" aria-modal="true" aria-labelledby="addProductTitle">
-        <div class="add-product-header">
+<div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="product-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <div class="product-modal-header">
             <div>
-                <p class="add-product-eyebrow">Products</p>
-                <h2 id="addProductTitle">Add product</h2>
+                <p class="product-modal-eyebrow">Products</p>
+                <h2 id="productModalTitle">Add product</h2>
             </div>
 
-            <button class="close-product-modal" type="button" id="closeAddProductModal" aria-label="Close add product form">
+            <button class="close-product-modal" type="button" id="closeProductModal" aria-label="Close product form">
                 &times;
             </button>
         </div>
 
-        <form class="add-product-form" id="addProductForm" novalidate>
+        <form
+            class="product-modal-form"
+            id="productForm"
+            enctype="multipart/form-data"
+            novalidate>
+
+            <input type="hidden" id="productId" name="id" value="">
+
             <div class="form-group" id="nameGroup">
                 <label for="productName">
                     Product name <span class="required" aria-hidden="true">*</span>
                 </label>
-
-                <input
-                    type="text"
-                    id="productName"
-                    name="name"
-                    placeholder="e.g. Classic Smash Burger"
-                    required>
-
+                <input type="text" id="productName" name="name" placeholder="e.g. Classic Smash Burger" required>
                 <span class="form-error" id="productNameError" role="alert"></span>
             </div>
 
             <div class="form-group">
                 <label for="productDescription">Description</label>
-                <textarea
-                    id="productDescription"
-                    name="description"
-                    placeholder="Describe your product..."></textarea>
+                <textarea id="productDescription" name="description" placeholder="Describe your product..."></textarea>
             </div>
 
             <div class="form-group" id="priceGroup">
                 <label for="productPrice">
                     Price ($) <span class="required" aria-hidden="true">*</span>
                 </label>
-
-                <input
-                    type="number"
-                    id="productPrice"
-                    name="price"
-                    placeholder="0.00"
-                    min="0"
-                    step="0.01"
-                    required>
-
+                <input type="number" id="productPrice" name="price" placeholder="0.00" min="0" step="0.01" required>
                 <span class="form-error" id="productPriceError" role="alert"></span>
             </div>
 
             <div class="form-group">
                 <label for="productCategory">Category</label>
-
-                <select id="productCategory" name="category">
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?= htmlspecialchars($category['id']); ?>">
-                            <?= htmlspecialchars($category['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <input type="text" id="productCategory" name="category" placeholder="e.g. Pizza">
             </div>
 
             <div class="form-group">
-                <label for="productImage">Image URL</label>
-                <input
-                    type="url"
-                    id="productImage"
-                    name="image"
-                    placeholder="https://...">
+                <label for="productImage">Product image</label>
+
+                <label class="image-upload" for="productImage">
+                    <div class="image-upload-content" id="imageUploadContent">
+                        <span class="image-upload-icon">+</span>
+                        <span class="image-upload-text">Upload product image</span>
+                        <span class="image-upload-hint">PNG, JPG or WEBP</span>
+                    </div>
+
+                    <img id="productImagePreview" class="product-image-preview" src="" alt="Product preview">
+
+                    <input type="file" id="productImage" name="image" accept="image/*">
+                </label>
             </div>
 
             <div class="availability-group">
@@ -194,26 +189,22 @@
                 </div>
 
                 <label class="switch" for="availabilityToggle">
-                    <input
-                        type="checkbox"
-                        id="availabilityToggle"
-                        name="is_available"
-                        checked>
+                    <input type="checkbox" id="availabilityToggle" name="is_available" checked>
                     <span class="slider"></span>
                 </label>
             </div>
 
-            <div id="addProductMessage" class="form-message" role="status" aria-live="polite"></div>
+            <div id="productFormMessage" class="form-message" role="status" aria-live="polite"></div>
 
             <div class="form-actions">
-                <button class="form-button cancel-button" type="button" id="cancelAddProduct">Cancel</button>
-                <button class="form-button submit-button" type="submit">Add product</button>
+                <button class="form-button cancel-button" type="button" id="cancelProductForm">Cancel</button>
+                <button class="form-button submit-button" type="submit" id="submitProductButton">Add product</button>
             </div>
         </form>
     </div>
 </div>
 
 <script src="/js/restaurant/products.js"></script>
-<script src="/js/restaurant/add-product.js"></script>
+<script src="/js/restaurant/product-modal.js"></script>
 
 <?php include __DIR__ . '/../partials/footer.view.php'; ?>
