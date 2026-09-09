@@ -15,7 +15,7 @@
         <div class="stat-card">
             <span class="stat-title">Today's Revenue</span>
             <h3 class="stat-value">
-                $<?= $stats['today_sales'] ?>
+                <?= $stats['today_sales'] ?> EGP
             </h3>
             <div class="stat-icon revenue-icon">
                 <?php include __DIR__ . '/../../public/assets/icons/dollar-sign.php'; ?>
@@ -78,7 +78,7 @@
                             <?= ucfirst(htmlspecialchars($order['status'])) ?>
                         </span>
                         <strong>
-                            $<?= number_format($order['total'], 2) ?>
+                            <?= number_format($order['total'], 2) ?> EGP
                         </strong>
                     </div>
                 </div>
