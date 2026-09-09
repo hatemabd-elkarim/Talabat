@@ -23,7 +23,15 @@ class RestaurantController
 
     public function products()
     {
-        view('restaurant/products.view.php');
+        $products = RestaurantMockData::products();
+        $stats = RestaurantMockData::stats();
+        $categories = RestaurantMockData::categories();
+
+        view('restaurant/products.view.php', [
+            'products' => $products,
+            'stats' => $stats,
+            'categories' => $categories
+        ]);
     }
 
     public function categories()
@@ -33,7 +41,11 @@ class RestaurantController
 
     public function orders()
     {
-        view('restaurant/orders.view.php');
+        $orders = RestaurantMockData::orders();
+
+        view('restaurant/orders.view.php', [
+            'orders' => $orders
+        ]);
     }
 
     public function profile()
