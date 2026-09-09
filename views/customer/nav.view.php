@@ -102,11 +102,9 @@ $currentUser = $_SESSION['user'] ?? null;
 
                     <div class="dropdown-divider"></div>
 
-                    <button
-                        class="sign-out"
-                        onclick="logout()">
-                        Sign out
-                    </button>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="sign-out">Sign out</button>
+                    </form>
 
                 </div>
 

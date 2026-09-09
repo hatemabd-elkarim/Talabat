@@ -83,6 +83,7 @@ class User
             'name' => $name,
             'email' => $email,
             'role' => 'customer',
+            'address_text' => $address_text,
         ];
     }
 

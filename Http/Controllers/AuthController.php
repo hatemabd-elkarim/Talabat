@@ -49,6 +49,24 @@ class AuthController
 
         User::login($form->user());
 
-        redirect('/customer/home');
+        $role = $_SESSION['user']['role'];
+
+        switch ($role) {
+            case 'customer':
+                redirect('/customer/home');
+
+            case 'restaurant':
+                redirect('/restaurant/dashboard');
+
+            case 'admin':
+                redirect('/admin/dashboard');
+        }
+    }
+
+    public function destroySession()
+    {
+        User::logout();
+
+        redirect('/login');
     }
 }

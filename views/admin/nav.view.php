@@ -53,10 +53,11 @@
                 </span>
             </div>
 
-            <button class="admin-signout-button" onclick="logout()" aria-label="Sign out">
-                <?php include __DIR__ . '/../../public/assets/icons/logout.php' ?>
-            </button>
-
+            <form action="/logout" method="POST">
+                <button class="admin-signout-button" aria-label="Sign out">
+                    <?php include __DIR__ . '/../../public/assets/icons/logout.php' ?>
+                </button>
+            </form>
         </div>
 
 
